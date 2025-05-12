@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
+  --background: #F5F2ED;
   --foreground: #171717;
 }
 
@@ -25,7 +25,7 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
-    --foreground: #ededed;
+    --foreground: #F5F2ED;
   }
 }
 
@@ -37,3 +37,4 @@ body {
 .clip-blob {
   clip-path: path("M40,0 C65,10 100,25 100,50 C100,75 65,90 40,100 C20,90 0,75 0,50 C0,25 20,10 40,0 Z");
 }
+
