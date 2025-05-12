@@ -15,9 +15,6 @@ const Services = () => {
         "Housing": ["Staff Accommodation", "Temporary Housing", "Housing Allowance", "Maintenance Requests"],
         "Catering": ["Event Catering", "Daily Meal Services", "Special Dietary Requests", "Cafeteria Services"],
         "Missions and Travel": ["Travel Booking", "Visa Assistance", "Expense Reimbursement", "Mission Approvals"],
-        "Missions and": ["Travel Booking", "Visa Assistance", "Expense Reimbursement", "Mission Approvals"],
-        "Missions  Travel": ["Travel Booking", "Visa Assistance", "Expense Reimbursement", "Mission Approvals"],
-        " and Travel": ["Travel Booking", "Visa Assistance", "Expense Reimbursement", "Mission Approvals"],
     };
     
     // Get the list of all main services

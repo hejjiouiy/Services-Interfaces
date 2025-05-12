@@ -239,7 +239,7 @@ const MultiStepForm = ({
               
               {/* Connecting line between steps */}
               {index < steps.length - 1 && (
-                <div className="hidden sm:block absolute h-0.5 w-1/4 bg-gray-200 left-0 top-1/2 transform -translate-y-1/2" 
+                <div className="hidden sm:block absolute h-0.5 w-1/4 left-0 top-1/2 transform -translate-y-1/2" 
                   style={{ left: `${(index + 0.5) * (100 / (steps.length - 1))}%`, width: `${100 / (steps.length - 1)}%` }}>
                   <div 
                     className="absolute h-full bg-secondary-green" 
