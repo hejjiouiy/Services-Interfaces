@@ -1,6 +1,9 @@
 'use client'
 import React, { useState } from 'react';
 import PurchaseRequestForm from './PurchaseRequestForm';
+import PurchaseDataTable from './PurchaseDataTable';
+import PowerBIAnalysisPage from '@/app/Services/gestionDeplacements/compoenents/PowerBIAnalysisPage';
+import PurchasesAnalysisPage from './PurchasesAnalysisPage';
 
 const PurchaseSection = () => {
     const [selectedSection, setSelectedSection] = useState("My Orders");
@@ -9,7 +12,7 @@ const PurchaseSection = () => {
     const sections = [
         { 
             name: "My Orders", 
-            component: <div className="h-64 flex items-center justify-center text-gray-500">Purchase Orders Table Would Go Here</div>,
+            component: <PurchaseDataTable />,
             description: "View and manage all your purchase orders",
             notification: 3
         },
@@ -21,13 +24,13 @@ const PurchaseSection = () => {
         },
         { 
             name: "Reports", 
-            component: <div className="h-64 flex items-center justify-center text-gray-500">Analysis Reports Would Go Here</div>,
+            component: <PurchasesAnalysisPage />,
             description: "View spending reports and purchasing analytics",
             notification: 0
         },
         { 
             name: "Dashboard", 
-            component: <div className="h-64 flex items-center justify-center text-gray-500">BI Dashboard Would Go Here</div>,
+            component: <PowerBIAnalysisPage/>,
             description: "Interactive visualizations of purchase data and trends",
             notification: 1
         }
