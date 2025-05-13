@@ -1,5 +1,5 @@
 import React from 'react';
-import KpiCard from '../componenets/kpiCard';
+import KpiCard from '../components/kpiCard';
 
 // Container for KPI-related components
 const KpiContainer = ({ className = '', ...props }) => (
