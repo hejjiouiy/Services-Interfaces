@@ -1,22 +1,32 @@
-'use client'
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+
+
+// Modified MultiStepForm component with the onFormDataChange handler
 
 const MultiStepForm = ({ 
   initialValues = {}, 
   onSubmit, 
   steps = [],
-  title = "Submit Form" 
+  title = "Submit Form",
+  onFormDataChange = null // New prop for catching form data changes
 }) => {
-  const [currentStep, setCurrentStep] = useState(0);
-  const [formData, setFormData] = useState(initialValues);
-  const [errors, setErrors] = useState({});
+  const [currentStep, setCurrentStep] = React.useState(0);
+  const [formData, setFormData] = React.useState(initialValues);
+  const [errors, setErrors] = React.useState({});
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
-    setFormData({
+    const newFormData = {
       ...formData,
       [name]: type === 'checkbox' ? checked : value
-    });
+    };
+    
+    setFormData(newFormData);
+
+    // Call the onFormDataChange handler if provided
+    if (onFormDataChange) {
+      onFormDataChange(newFormData);
+    }
 
     // Clear error when user starts typing
     if (errors[name]) {
@@ -208,7 +218,7 @@ const MultiStepForm = ({
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-6 max-w-3xl mx-auto">
+    <div className="bg-white rounded-lg shadow-md p-6 max-w-full min-w-fit mx-auto">
       <h2 className="text-xl font-semibold text-main-green mb-6">{title}</h2>
       
       {/* Progress indicator */}

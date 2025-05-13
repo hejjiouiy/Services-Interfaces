@@ -3,6 +3,11 @@ import React, { useState } from 'react';
 import Card from '../componenets/card';
 import Approved from '../componenets/approved';
 import Form from '../componenets/form';
+import MissionRequestForm from '@/app/Services/gestionDeplacements/compoenents/MissionRequestForm';
+import MissionsDataTable from '@/app/Services/gestionDeplacements/compoenents/MissionsDataTable';
+import MissionsCardView from '@/app/Services/gestionDeplacements/compoenents/MissionsCardView';
+import MissionsAnalysisPage from '@/app/Services/gestionDeplacements/compoenents/MissionsAnalysisPage';
+import PowerBIAnalysisPage from '@/app/Services/gestionDeplacements/compoenents/PowerBIAnalysisPage';
 
 const Services = () => {
     const [selectedService, setSelectedService] = useState("Access");
@@ -78,23 +83,28 @@ const Services = () => {
         ],
         "Missions and Travel": [
             { 
-                name: "Form", 
-                component: <Form formType="travel" />,
+                name: "Booking Form", 
+                component: <MissionRequestForm/>,
                 description: "Book flights, accommodations, and transportation"
             },
             { 
                 name: "Requests", 
-                component: <Form formType="visa" />,
+                component: <MissionsDataTable/>,
                 description: "Request help with visa applications and processing"
             },
             { 
                 name: "Reports", 
-                component: <Form formType="expenses" />,
+                component: <MissionsCardView />,
+                description: "Submit travel expenses for reimbursement"
+            },
+            { 
+                name: "BI Dashboard", 
+                component: <PowerBIAnalysisPage />,
                 description: "Submit travel expenses for reimbursement"
             },
             { 
                 name: "Analysis", 
-                component: <Approved type="mission" />,
+                component: <MissionsAnalysisPage/>,
                 description: "Request and track mission approvals"
             }
         ],
