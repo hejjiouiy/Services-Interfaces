@@ -78,22 +78,22 @@ const Services = () => {
         ],
         "Missions and Travel": [
             { 
-                name: "Travel Booking", 
+                name: "Form", 
                 component: <Form formType="travel" />,
                 description: "Book flights, accommodations, and transportation"
             },
             { 
-                name: "Visa Assistance", 
+                name: "Requests", 
                 component: <Form formType="visa" />,
                 description: "Request help with visa applications and processing"
             },
             { 
-                name: "Expense Reimbursement", 
+                name: "Reports", 
                 component: <Form formType="expenses" />,
                 description: "Submit travel expenses for reimbursement"
             },
             { 
-                name: "Mission Approvals", 
+                name: "Analysis", 
                 component: <Approved type="mission" />,
                 description: "Request and track mission approvals"
             }
