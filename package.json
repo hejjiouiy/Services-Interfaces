@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@heroicons/react": "^2.2.0",
     "chart.js": "^4.4.9",
     "lucide-react": "^0.510.0",
     "next": "^15.3.2",
@@ -20,6 +21,8 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
+    "@types/node": "22.15.18",
+    "@types/react": "19.1.4",
     "eslint": "^9",
     "eslint-config-next": "15.2.4",
     "tailwindcss": "^4"

@@ -1,10 +1,10 @@
 import React from 'react';
+import WarehouseSection from './components/WarehouseSection';
 
 export default function WarehousePage() {
     return (
         <main>
-            <h1>Warehouse</h1>
-            {/* Add warehouse content here */}
+            <WarehouseSection />
         </main>
     );
 }

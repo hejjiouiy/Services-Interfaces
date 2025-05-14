@@ -1,8 +1,8 @@
 'use client'
 import React, { useState } from 'react';
-import Card from '../componenets/card';
-import Approved from '../componenets/approved';
-import Form from '../componenets/form';
+import Card from '../components/card';
+import Approved from '../components/approved';
+import Form from '../components/form';
 import MissionRequestForm from '@/app/Services/gestionDeplacements/compoenents/MissionRequestForm';
 import MissionsDataTable from '@/app/Services/gestionDeplacements/compoenents/MissionsDataTable';
 import MissionsCardView from '@/app/Services/gestionDeplacements/compoenents/MissionsCardView';
@@ -10,11 +10,38 @@ import MissionsAnalysisPage from '@/app/Services/gestionDeplacements/compoenents
 import PowerBIAnalysisPage from '@/app/Services/gestionDeplacements/compoenents/PowerBIAnalysisPage';
 
 const Services = () => {
-    const [selectedService, setSelectedService] = useState("Access");
-    const [selectedSubservice, setSelectedSubservice] = useState("Access Demand");
+    const [selectedService, setSelectedService] = useState("Missions and Travel");
+    const [selectedSubservice, setSelectedSubservice] = useState("Booking Form");
     
     // Define services and their subservices with component mappings
     const servicesWithSubs = {
+        "Missions and Travel": [
+            { 
+                name: "Booking Form", 
+                component: <MissionRequestForm/>,
+                description: "Book flights, accommodations, and transportation"
+            },
+            { 
+                name: "Requests", 
+                component: <MissionsDataTable/>,
+                description: "Request help with visa applications and processing"
+            },
+            { 
+                name: "Reports", 
+                component: <MissionsCardView />,
+                description: "Submit travel expenses for reimbursement"
+            },
+            { 
+                name: "BI Dashboard", 
+                component: <PowerBIAnalysisPage />,
+                description: "Submit travel expenses for reimbursement"
+            },
+            { 
+                name: "Analysis", 
+                component: <MissionsAnalysisPage/>,
+                description: "Request and track mission approvals"
+            }
+        ],
         "Access": [
             { 
                 name: "Access Demand", 
@@ -81,33 +108,7 @@ const Services = () => {
                 description: "View cafeteria hours, menus, and information"
             }
         ],
-        "Missions and Travel": [
-            { 
-                name: "Booking Form", 
-                component: <MissionRequestForm/>,
-                description: "Book flights, accommodations, and transportation"
-            },
-            { 
-                name: "Requests", 
-                component: <MissionsDataTable/>,
-                description: "Request help with visa applications and processing"
-            },
-            { 
-                name: "Reports", 
-                component: <MissionsCardView />,
-                description: "Submit travel expenses for reimbursement"
-            },
-            { 
-                name: "BI Dashboard", 
-                component: <PowerBIAnalysisPage />,
-                description: "Submit travel expenses for reimbursement"
-            },
-            { 
-                name: "Analysis", 
-                component: <MissionsAnalysisPage/>,
-                description: "Request and track mission approvals"
-            }
-        ],
+        
     };
     
     // Helper function to get notification count for a service
