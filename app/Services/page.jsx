@@ -21,25 +21,6 @@ const ServicesPage = () => {
     <main>
       <Services />
 
-      {/* Onglets horizontaux */}
-      <div className="text-center py-4">
-        <div className="inline-flex gap-4 border-b">
-          {tabs.map((tab) => (
-            <Link
-              key={tab.href}
-              href={tab.href}
-              className={`pb-2 px-4 font-medium ${
-                pathname === tab.href
-                  ? "border-b-2 border-green-600 text-green-700"
-                  : "text-gray-500 hover:text-green-600"
-              }`}
-            >
-              {tab.label}
-            </Link>
-          ))}
-        </div>
-      </div>
-
       {/* Messages par rôle */}
       <div className="p-6">
         {user.role === "responsable" && (
