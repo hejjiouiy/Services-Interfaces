@@ -1,10 +1,11 @@
 import React from 'react';
+import PurchaseSection from './components/PurchaseSection';
 
 const PurchasePage = () => {
     return (
         <div>
-            <h1>Purchase Page</h1>
-            {/* Add purchase form or content here */}
+            <PurchaseSection />
+            
         </div>
     );
 };

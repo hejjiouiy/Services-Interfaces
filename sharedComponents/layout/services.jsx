@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import dynamic from 'next/dynamic';
 
-// 📦 Import dynamique des composants
+// 📦 Import dynamique des composants existants
 const AccessDemand = dynamic(() => import('@/app/Services/access/AccessDemand'));
 const PendingDemands = dynamic(() => import('@/app/Services/access/PendingDemands'));
 const VisitorPasses = dynamic(() => import('@/app/Services/access/VisitorPasses'));
@@ -13,6 +13,13 @@ const Transport = dynamic(() => import('@/app/Services/housing/Transport'));
 const EventCatering = dynamic(() => import('@/app/Services/catering/EventCatering'));
 const DailyMeals = dynamic(() => import('@/app/Services/catering/DailyMeals'));
 const SpecialDiet = dynamic(() => import('@/app/Services/catering/SpecialDiet'));
+
+// ✅ Nouveaux composants de Missions (ajout de ton collègue)
+const MissionRequestForm = dynamic(() => import('@/app/Services/gestionDeplacements/compoenents/MissionRequestForm'));
+const MissionsDataTable = dynamic(() => import('@/app/Services/gestionDeplacements/compoenents/MissionsDataTable'));
+const MissionsCardView = dynamic(() => import('@/app/Services/gestionDeplacements/compoenents/MissionsCardView'));
+const MissionsAnalysisPage = dynamic(() => import('@/app/Services/gestionDeplacements/compoenents/MissionsAnalysisPage'));
+const PowerBIAnalysisPage = dynamic(() => import('@/app/Services/gestionDeplacements/compoenents/PowerBIAnalysisPage'));
 
 const Services = () => {
   const [selectedService, setSelectedService] = useState("Access");
@@ -72,24 +79,29 @@ const Services = () => {
     ],
     "Missions and Travel": [
       {
-        name: "Form",
-        component: <div className="text-gray-500 italic">Formulaire mission à venir</div>,
-        description: "Formulaire pour missions"
+        name: "Booking Form",
+        component: <MissionRequestForm />,
+        description: "Réserver un déplacement (vols, logement...)"
       },
       {
         name: "Requests",
-        component: <div className="text-gray-500 italic">À implémenter</div>,
-        description: "Demande de visa / déplacement"
+        component: <MissionsDataTable />,
+        description: "Consulter les demandes en cours"
       },
       {
         name: "Reports",
-        component: <div className="text-gray-500 italic">À implémenter</div>,
-        description: "Remboursement / rapports"
+        component: <MissionsCardView />,
+        description: "Soumettre des frais de mission"
+      },
+      {
+        name: "BI Dashboard",
+        component: <PowerBIAnalysisPage />,
+        description: "Consulter les dashboards PowerBI"
       },
       {
         name: "Analysis",
-        component: <div className="text-gray-500 italic">À implémenter</div>,
-        description: "Analyse de mission"
+        component: <MissionsAnalysisPage />,
+        description: "Analyse avancée des missions"
       }
     ]
   };
