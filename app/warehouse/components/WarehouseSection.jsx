@@ -1,8 +1,8 @@
 'use client';
 import React, { useState, useMemo } from 'react'; // Added useMemo, though not strictly necessary for this state structure
-import Form from '@/sharedComponents/components/form'; // Assuming these components exist and accept a 'type' prop
-import Card from '@/sharedComponents/components/card'; // Assuming these components exist and accept 'status' and 'type' props
-import Approved from '@/sharedComponents/components/approved'; // Assuming this component exists and accepts a 'type' prop
+import Form from '../../../sharedComponents/components/form'; // Assuming these components exist and accept a 'type' prop
+import Card from '../../../sharedComponents/components/card'; // Assuming these components exist and accept 'status' and 'type' props
+import Approved from '../../../sharedComponents/components/approved'; // Assuming this component exists and accepts a 'type' prop
 
 // Import icons (using Heroicons as an example)
 import {

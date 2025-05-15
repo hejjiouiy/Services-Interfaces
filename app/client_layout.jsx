@@ -21,7 +21,7 @@ export default function ClientLayout({ children }) {
   return (
     <>
       <div className="grid grid-cols-5 min-h-screen font-[family-name:var(--font-geist-sans)]">
-        <div className="h-screen border-2 border-gray-200 w-fit rounded-lg col-span-1">
+        <div className="h-screen border-2 border-gray-200 w-fit rounded-lg col-span-1 sticky">
           <Sidebar />
         </div>
         <div className="col-span-4 w-full m-0 p-0 flex flex-col">

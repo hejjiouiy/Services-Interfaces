@@ -2,7 +2,7 @@ import React from 'react';
 
 const Footer = () => {
     return (
-        <footer className="grid grid-cols-4 pt-14 gap-4 w-full bg-main-green text-main-beige p-4 mt-10">
+        <footer className="grid grid-cols-4 pt-14 gap-4 w-full bg-main-green text-main-beige p-4 mt-10 relative z-20">
             <div className="">
                 <img src="/images/logo.png" alt="Logo" className="" />
             </div>
@@ -11,11 +11,11 @@ const Footer = () => {
                     Information
                 </h2>
                 <ul className="flex flex-col space-y-4 mt-5 mx-1">
-                    <li className="hover:text-secondary-green duration-300 ease-in ease-out"><a href="/">Smart Healthcare City</a></li>
-                    <li className="hover:text-secondary-green duration-300 ease-in ease-out"><a href="/">faculty of medical science</a></li>
-                    <li className="hover:text-secondary-green duration-300 ease-in ease-out"><a href="/">UM6P Hospitals</a></li>
-                    <li className="hover:text-secondary-green duration-300 ease-in ease-out"><a href="/">ISSB Institute</a></li>
-                    <li className="hover:text-secondary-green duration-300 ease-in ease-out"><a href="/">Biotech park</a></li>
+                    <li className="hover:text-secondary-green duration-300 ease-in-out"><a href="/">Smart Healthcare City</a></li>
+                    <li className="hover:text-secondary-green duration-300 ease-in-out"><a href="/">faculty of medical science</a></li>
+                    <li className="hover:text-secondary-green duration-300 ease-in-out"><a href="/">UM6P Hospitals</a></li>
+                    <li className="hover:text-secondary-green duration-300 ease-in-out"><a href="/">ISSB Institute</a></li>
+                    <li className="hover:text-secondary-green duration-300 ease-in-out"><a href="/">Biotech park</a></li>
                 </ul>
                 
             </div>
@@ -24,10 +24,10 @@ const Footer = () => {
                     Contact
                 </h2>
                 <ul className="flex flex-col space-y-4 mt-5 mx-1">
-                    <li className="hover:text-secondary-green duration-300 ease-in ease-out">Lot 660, Hay Moulay Rachid 
+                    <li className="hover:text-secondary-green duration-300 ease-in-out">Lot 660, Hay Moulay Rachid 
                     <br/>Ben Guerir, 43150, Morocco</li>
-                    <li className="hover:text-secondary-green duration-300 ease-in ease-out"><a href="/"> +212 525 073 100</a></li>
-                    <li className="hover:text-secondary-green duration-300 ease-in ease-out"><a href="/">contact@um6p.ma</a></li>
+                    <li className="hover:text-secondary-green duration-300 ease-in-out"><a href="/"> +212 525 073 100</a></li>
+                    <li className="hover:text-secondary-green duration-300 ease-in-out"><a href="/">contact@um6p.ma</a></li>
                 </ul>
                 
             </div>
@@ -36,7 +36,7 @@ const Footer = () => {
                     Follow us
                 </h2>
                 <ul className="flex flex-row space-x-2 mt-5 mx-1">
-                    <li className="hover:text-secondary-green duration-300 ease-in ease-out"><a href="/"> 
+                    <li className="hover:text-secondary-green duration-300 ease-in-out"><a href="/"> 
                     <svg 
                         className="w-7 h-7 mr-2"
                         viewBox="-5 0 20 20" 

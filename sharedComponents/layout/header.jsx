@@ -146,7 +146,7 @@ const Header = () => {
                                         </div>
                                     )}
                                 </div>
-                                
+                                eustacebgg@gmail.com
                                 <div className="p-2 border-t border-gray-200 bg-gray-50">
                                     <button 
                                         className="w-full text-center py-2 text-sm text-main-green hover:text-green-700 transition-colors"

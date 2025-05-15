@@ -47,7 +47,7 @@ const Login = () => {
       // const data = await response.json();
 
       // Redirection après connexion réussie
-      router.push('/dashboard');
+      router.push('/');
     } catch (err) {
       setError(err.message || 'Une erreur est survenue lors de la connexion');
     } finally {
@@ -69,7 +69,7 @@ const Login = () => {
           </div>
           <h1 className="text-3xl md:text-4xl font-bold mb-4">SHCC Portal</h1>
           <p className="text-lg md:text-xl mb-8">Accédez à toutes les ressources et services du SHCC en un seul endroit.</p>
-          <p className="text-sm md:text-base opacity-80">© 2024 SHCC. Tous droits réservés.</p>
+          <p className="text-sm md:text-base opacity-80">© 2025 SHCC. Tous droits réservés.</p>
         </div>
       </div>
 

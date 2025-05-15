@@ -2,10 +2,11 @@
 import { useState, useEffect } from "react";
 import React from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 
 const Sidebar = () => {
     const pathname = usePathname();
+    const router = useRouter();
     
     const mainLinks = [
         { 
@@ -52,11 +53,18 @@ const Sidebar = () => {
         setExpandedMenu(expandedMenu === menuName ? null : menuName);
     };
 
+    // Handle logout
+    const handleLogout = () => {
+        // In a real application, you would clear auth tokens, cookies, etc.
+        // For now, just redirect to login page
+        router.push('/login');
+    };
+
     // Check if current path is a sublink of Dashboard
     const isDashboardSubLink = mainLinks[0].subLinks.some(sub => sub.path === pathname);
 
     return (
-        <aside className="m-0 p-0 absolute top-0 left-0 w-64 h-screen bg-main-beige text-main-green ">
+        <aside className="m-0 p-0 fixed top-0 left-0 w-64 h-screen bg-main-beige text-main-green overflow-y-auto z-10">
             <nav className="flex flex-col items-start justify-start p-4">
                 <div className="flex items-center mb-4 w-full ml-4">
                     <h1 className="flex justify-between my-14 w-[80%]">
@@ -74,7 +82,7 @@ const Sidebar = () => {
                         </span>
                     </h1>
                 </div>
-                <div className="m-auto h-full flex flex-col w-full">
+                <div className="m-auto flex flex-col w-full">
                     {mainLinks.map((link) => (
                         <div key={link.name} className="w-full mb-1">
                             {link.subLinks ? (
@@ -157,6 +165,21 @@ const Sidebar = () => {
                             )}
                         </div>
                     ))}
+                    
+                    {/* Logout button right after the navigation links */}
+                    <div className="w-full mt-6 mb-4">
+                        <div className="w-full h-px bg-main-green/20 mb-6"></div>
+                        <button 
+                            onClick={handleLogout}
+                            className="w-full flex items-center justify-between p-2 rounded-sm hover:bg-red-600 hover:text-white transition-colors duration-300"
+                        >
+                            <span className="font-medium">Logout</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                                <path fillRule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z"/>
+                                <path fillRule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
+                            </svg>
+                        </button>
+                    </div>
                 </div>
             </nav>
         </aside>

@@ -1,5 +1,5 @@
 'use client';
-import MultiStepForm from '@/sharedComponents/components/multiStepForm';
+import MultiStepForm from '../../../../sharedComponents/components/multiStepForm';
 import React, { useState, useEffect } from 'react';
 // Enums (simulés pour cet exemple)
 const TypeMission = {

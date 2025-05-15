@@ -1,4 +1,4 @@
-import Services from '@/sharedComponents/layout/services';
+import Services from '../../sharedComponents/layout/services';
 import React from 'react';
 
 const ServicesPage = () => {
