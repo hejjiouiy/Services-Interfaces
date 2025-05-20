@@ -2,9 +2,9 @@
 "use client";
 
 import { usePathname } from 'next/navigation';
-import Sidebar from "@/sharedComponents/layout/sidebar";
-import Header from "@/sharedComponents/layout/header";
-import Footer from "@/sharedComponents/layout/Footer";
+import Sidebar from "../sharedComponents/layout/sidebar";
+import Header from "../sharedComponents/layout/header";
+import Footer from "../sharedComponents/layout/Footer";
 
 export default function ClientLayout({ children }) {
   const pathname = usePathname();
