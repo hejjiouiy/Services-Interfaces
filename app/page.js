@@ -1,4 +1,4 @@
-import PortalInfo from "@/sharedComponents/containers/portalInfo";
+import PortalInfo from "../sharedComponents/containers/portalInfo";
 
 export default function Home() {
   return (

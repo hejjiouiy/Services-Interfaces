@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import PurchaseRequestForm from './PurchaseRequestForm';
 import PurchaseDataTable from './PurchaseDataTable';
-import PowerBIAnalysisPage from '@/app/Services/gestionDeplacements/compoenents/PowerBIAnalysisPage';
+import PowerBIAnalysisPage from '@/app/Services/gestionDeplacements/components/PowerBIAnalysisPage';
 import PurchasesAnalysisPage from './PurchasesAnalysisPage';
 
 const PurchaseSection = () => {
