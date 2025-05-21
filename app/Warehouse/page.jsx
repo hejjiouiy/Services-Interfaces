@@ -1,5 +1,5 @@
 import React from 'react';
-import WarehouseSection from './components/WarehouseSection';
+import WarehouseSection from './moduleComponents/WarehouseSection';
 
 export default function WarehousePage() {
     return (

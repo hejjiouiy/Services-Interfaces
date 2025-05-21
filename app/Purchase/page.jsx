@@ -1,5 +1,5 @@
 import React from 'react';
-import PurchaseSection from './components/PurchaseSection';
+import PurchaseSection from './moduleComponents/PurchaseSection';
 
 const PurchasePage = () => {
     return (

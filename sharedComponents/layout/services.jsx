@@ -3,11 +3,11 @@ import React, { useState } from 'react';
 import Card from '../components/card';
 import Approved from '../components/approved';
 import Form from '../components/form';
-import MissionRequestForm from '../../app/Services/gestionDeplacements/components/MissionRequestForm';
-import MissionsDataTable from '../../app/Services/gestionDeplacements/components/MissionsDataTable';
-import MissionsCardView from '../../app/Services/gestionDeplacements/components/MissionsCardView';
-import MissionsAnalysisPage from '../../app/Services/gestionDeplacements/components/MissionsAnalysisPage';
-import PowerBIAnalysisPage from '../../app/Services/gestionDeplacements/components/PowerBIAnalysisPage';
+import MissionRequestForm from '../../app/Process/Missions/moduleComponents/MissionRequestForm';
+import MissionsDataTable from '../../app/Process/Missions/moduleComponents/MissionsDataTable';
+import MissionsCardView from '../../app/Process/Missions/moduleComponents/MissionsCardView';
+import MissionsAnalysisPage from '../../app/Process/Missions/moduleComponents/MissionsAnalysisPage';
+import PowerBIAnalysisPage from '../../app/Process/Missions/moduleComponents/PowerBIAnalysisPage';
 
 const Services = () => {
     const [selectedService, setSelectedService] = useState("Missions and Travel");
