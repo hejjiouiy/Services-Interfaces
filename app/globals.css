@@ -5,6 +5,7 @@
 
 }
 
+
 @theme {
   --color-main-beige: #F5F2ED;
   --color-darker-beige: #717171;
@@ -29,5 +30,93 @@ body {
 }
 .clip-blob {
   clip-path: path("M40,0 C65,10 100,25 100,50 C100,75 65,90 40,100 C20,90 0,75 0,50 C0,25 20,10 40,0 Z");
+}
+
+/* Add this to your global CSS file or import it in your main component */
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 0.5;
+    }
+    50% {
+        opacity: 0.8;
+    }
+}
+
+.perspective {
+    perspective: 1000px;
+}
+
+.carousel-slide {
+    backface-visibility: hidden;
+    transform-style: preserve-3d;
+}
+
+.carousel-slide.active {
+    transform: translateX(0) scale(1);
+    z-index: 20;
+    opacity: 1;
+}
+
+.carousel-slide.prev {
+    transform: translateX(-100%) scale(0.9);
+    z-index: 10;
+    opacity: 0.7;
+}
+
+.carousel-slide.next {
+    transform: translateX(100%) scale(0.9);
+    z-index: 10;
+    opacity: 0.7;
+}
+
+.carousel-slide.hidden {
+    transform: translateX(0) scale(0.85);
+    z-index: 0;
+    opacity: 0;
+}
+
+.slide-content {
+    animation: fadeInUp 0.7s ease-out forwards;
+}
+
+.text-shadow-xs {
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+}
+
+.text-shadow-sm {
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Responsive utilities */
+.line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* Mobile optimizations */
+@media (max-width: 640px) {
+    .carousel-slide.prev,
+    .carousel-slide.next {
+        transform: translateX(-50%) scale(0.95);
+        opacity: 0;
+    }
+    
+    .slide-content {
+        backdrop-filter: blur(4px);
+    }
 }
 
