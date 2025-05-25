@@ -140,7 +140,7 @@ const Header = ({ isMobile = false, sidebarOpen = false, setSidebarOpen = () => 
                     </div>
                     
                     {/* User Name and Title - Hidden on small mobile */}
-                    <div className={`${isMobile ? 'hidden sm:block' : ''}`}>
+                    <div className={`${isMobile ? ' sm:block' : ''}`}>
                         <h1 className={`text-gray-600 ${isMobile ? 'text-sm' : 'text-sm lg:text-md'}`}>
                             <span className={`font-bold text-black ${isMobile ? 'text-base' : 'text-lg lg:text-2xl'}`}>
                                 Mohamed Salam

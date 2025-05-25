@@ -37,7 +37,7 @@ export default function ClientLayout({ children }) {
   // For all other pages, render the layout with sidebar, header, and footer
   return (
     <>
-      <div className="flex min-h-screen font-[family-name:var(--font-geist-sans)]">
+      <div className="flex w-full min-h-screen font-[family-name:var(--font-geist-sans)]">
         {/* Sidebar */}
         {/* The Sidebar component itself handles its mobile visibility (fixed position, translate-x) */}
         <Sidebar />
@@ -45,16 +45,21 @@ export default function ClientLayout({ children }) {
         {/* Main content area */}
         {/* This div dynamically adjusts its left margin based on sidebar state */}
         <div className={`
-          flex-1 flex flex-col transition-all duration-300 ease-in-out
+          flex-1 flex flex-col transition-all duration-300 ease-in-out w-full
           ${isMobile ? 'ml-0' : 'ml-16 lg:ml-70'}
         `}>
-          <Header />
-          <main className="flex-1 w-full p-4 md:p-6 lg:p-8"> {/* Added responsive padding */}
-            {children}
-          </main>
-          <Footer />
+          <Header isMobile={isMobile} />
+<main className={`
+  flex-1 w-full p-4 md:p-6 lg:p-8
+  ${isMobile ? 'pt-20' : ''}
+`}>
+  {children}
+</main>
+               
+        
+
         </div>
-      </div>
+      </div><Footer />
     </>
   );
 }
