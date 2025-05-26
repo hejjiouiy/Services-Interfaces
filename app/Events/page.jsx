@@ -1,16 +1,14 @@
-import React from 'react';
+'use client'
+
+import React from 'react'
+import EventRequestForm from './moduleComponents/EventRequestForm'
 
 const EventPage = () => {
-    return (
-        <main>
-            <header>
-                <h1>Event Page</h1>
-            </header>
-            <section>
-                {/* Event details will go here */}
-            </section>
-        </main>
-    );
-};
+  return (
+    <main className="p-6">
+      <EventRequestForm />
+    </main>
+  )
+}
 
-export default EventPage;
+export default EventPage
