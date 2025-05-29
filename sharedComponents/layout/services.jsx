@@ -116,33 +116,6 @@ const Services = () => {
                 description: "View cafeteria hours, menus, and information"
             }
         ],
-        "Events": [
-            { 
-                name: "Event Request", 
-                component: <EventRequestForm />, 
-                description: "Soumettre une nouvelle demande d’événement"
-            },
-            { 
-                name: "My Requests", 
-                component: <EventRequestList />, 
-                description: "Suivre vos demandes d’événement"
-            },
-            { 
-                name: "Validation Panel", 
-                component: <EventValidationPanel />, 
-                description: "Examiner et traiter les demandes en attente"
-            },
-            { 
-                name: "Status Manager", 
-                component: <EventStatusManager />, 
-                description: "Mettre à jour le statut des événements validés"
-            },
-            { 
-                name: "Approved Events", 
-                component: <ApprovedEventsList />, 
-                description: "Consulter les événements validés"
-            }
-        ],
     };
     
     // Helper function to get notification count for a service
