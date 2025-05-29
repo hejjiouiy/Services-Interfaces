@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import SignaturePad from './signaturePad';
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -200,6 +201,12 @@ const Register = () => {
                 placeholder="Confirm your password"
                 required
               />
+            </div>
+            <div className="mb-6">
+              <label htmlFor="digitalSignature" className="block text-sm font-medium text-gray-700 mb-2">
+                Digital Signature *
+              </label>
+              <SignaturePad />
             </div>
 
             <div className="flex items-start mb-8">

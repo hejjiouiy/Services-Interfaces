@@ -5,7 +5,7 @@ import Link from 'next/link';
 // Pour les données d'exemple (dans une application réelle, ces données viendraient d'une API)
 const sampleMissions = [
   {
-    id: "550e8400-e29b-41d4-a716-446655440000",
+    id: "01e066a3-e35f-403a-bd8d-23d0f0b948a3",
     type: "FORMATION",
     destination: "Paris",
     details: "Formation sur les nouvelles méthodes de développement",
@@ -97,7 +97,7 @@ const sampleMissions = [
     ]
   },
   {
-    id: "550e8400-e29b-41d4-a716-446655440011",
+    id: "528af3aa4-99f2-470f-8817-74401b3d9123",
     type: "FORMATION",
     destination: "Casablanca",
     details: "Formation sur les normes ISO 9001",
@@ -261,10 +261,45 @@ const MissionsDataTable = () => {
   };
   
   // Télécharger le rapport (simulation)
-  const downloadReport = () => {
+const downloadReport = async () => {
+  try {
+    // Afficher un message de début de téléchargement
     alert(`Téléchargement du rapport pour la mission ${selectedMission.id} initié.`);
+    
+    // Récupérer le rapport depuis l'API
+    const response = await fetch(`http://127.0.0.1:8051/rapport/download/${selectedMission.id}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error(`Erreur HTTP: ${response.status}`);
+    }
+
+    // Récupérer le blob du fichier
+    const blob = await response.blob();
+
+    // Créer une URL pour le blob
+    const url = window.URL.createObjectURL(blob);
+
+    // Ouvrir le fichier dans un nouvel onglet
+    window.open(url, '_blank');
+
+    // Facultatif : nettoyer l'URL après un certain temps (pour éviter les fuites mémoire)
+    setTimeout(() => {
+      window.URL.revokeObjectURL(url);
+    }, 1000 * 60); // nettoie après 1 minute
+
     closeAllDialogs();
-  };
+    
+  } catch (error) {
+    console.error('Erreur lors de l’ouverture du rapport:', error);
+    alert('Erreur lors de l’ouverture du rapport. Veuillez réessayer.');
+  }
+};
+
 
   // Fermer le dialogue si on clique en dehors
   useEffect(() => {
