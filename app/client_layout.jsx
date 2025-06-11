@@ -3,8 +3,8 @@
 
 import { usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
-import Sidebar from "../sharedComponents/layout/sidebar";
-import Header from "../sharedComponents/layout/header";
+import Sidebar from "../sharedComponents/layout/sidebar/Sidebar";
+import Header from "../sharedComponents/layout/header/Header";
 import Footer from "../sharedComponents/layout/Footer";
 
 export default function ClientLayout({ children }) {
