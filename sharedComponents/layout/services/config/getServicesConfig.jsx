@@ -13,6 +13,12 @@ import EventRequestList from '../../../../app/Events/moduleComponents/EventReque
 import EventValidationPanel from '../../../../app/Events/moduleComponents/EventValidationPanel';
 import EventStatusManager from '../../../../app/Events/moduleComponents/EventStatusManager';
 import ApprovedEventsList from '../../../../app/Events/moduleComponents/ApprovedEventsList';
+import HousingRequestForm from '../../../../app/Process/Housing/moduleComponents/HousingRequestForm';
+import HousingRequestList from '../../../../app/Process/Housing/moduleComponents/HousingRequestList';
+import HousingValidationPanel from '../../../../app/Process/Housing/moduleComponents/HousingValidationPanel';
+import HousingAssignmentPanel from '../../../../app/Process/Housing/moduleComponents/HousingAssignmentPanel';
+import HousingGuestManager from '../../../../app/Process/Housing/moduleComponents/HousingGuestManager';
+
 
 
 export const getServicesConfig = () => ({
@@ -66,25 +72,30 @@ export const getServicesConfig = () => ({
     }
   ],
   "Housing": [
-    { 
-      name: "Staff Accommodation", 
-      component: <Form formType="staff-housing" />,
-      description: "Apply for long-term staff accommodation"
+    {
+      name: "Submit Request",
+      component: <HousingRequestForm />,
+      description: "Submit a new accommodation request for yourself or guests"
     },
-    { 
-      name: "Temporary Housing", 
-      component: <Form formType="temp-housing" />,
-      description: "Request short-term temporary housing"
+    {
+      name: "My Requests",
+      component: <HousingRequestList />,
+      description: "View and track your accommodation requests"
     },
-    { 
-      name: "Housing Allowance", 
-      component: <Approved type="allowance" />,
-      description: "Submit housing allowance requests and documentation"
+    {
+      name: "Validation",
+      component: <HousingValidationPanel />,
+      description: "Review, validate or reject submitted requests"
     },
-    { 
-      name: "Maintenance Requests", 
-      component: <Form formType="maintenance" />,
-      description: "Report issues and request maintenance for your accommodation"
+    {
+      name: "Assignment & Budget",
+      component: <HousingAssignmentPanel />,
+      description: "Assign accommodation and link a budget line"
+    },
+    {
+      name: "Guest Management",
+      component: <HousingGuestManager />,
+      description: "Manage guests and their reservation requests"
     }
   ],
   "Catering": [
@@ -109,31 +120,4 @@ export const getServicesConfig = () => ({
       description: "View cafeteria hours, menus, and information"
     }
   ],
-  "Events": [
-    { 
-      name: "Event Request", 
-      component: <EventRequestForm />, 
-      description: "Soumettre une nouvelle demande d'événement"
-    },
-    { 
-      name: "My Requests", 
-      component: <EventRequestList />, 
-      description: "Suivre vos demandes d'événement"
-    },
-    { 
-      name: "Validation Panel", 
-      component: <EventValidationPanel />, 
-      description: "Examiner et traiter les demandes en attente"
-    },
-    { 
-      name: "Status Manager", 
-      component: <EventStatusManager />, 
-      description: "Mettre à jour le statut des événements validés"
-    },
-    { 
-      name: "Approved Events", 
-      component: <ApprovedEventsList />, 
-      description: "Consulter les événements validés"
-    }
-  ]
 });
