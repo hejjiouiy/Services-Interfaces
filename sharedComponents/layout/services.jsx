@@ -5,7 +5,7 @@ import Approved from '../components/approved';
 import Form from '../components/form';
 import MissionRequestForm from '../../app/Process/Missions/moduleComponents/MissionRequestForm';
 import MissionsDataTable from '../../app/Process/Missions/moduleComponents/MissionsDataTable';
-import MissionsCardView from '../../app/Process/Missions/moduleComponents/MissionsCardView';
+import MissionsCardView from '../../app/Process/Missions/moduleComponents/MissionsCardView/MissionsCardView';
 import MissionsAnalysisPage from '../../app/Process/Missions/moduleComponents/MissionsAnalysisPage';
 import PowerBIAnalysisPage from '../../app/Process/Missions/moduleComponents/PowerBIAnalysisPage';
 import EventRequestForm from '../../app/Events/moduleComponents/EventRequestForm';
