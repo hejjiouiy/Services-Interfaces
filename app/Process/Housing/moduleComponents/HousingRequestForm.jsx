@@ -3,9 +3,9 @@ import MultiStepForm from '../../../../sharedComponents/components/multiStepForm
 import React, { useState } from 'react';
 
 const HousingType = {
-  SHORT_TERM: 'COURT_SEJOUR',
-  LONG_TERM: 'LONG_SEJOUR',
-  GUEST_ONLY: 'INVITE_SEUL',
+  SHORT_TERM: 'SHORT_TERM',
+  LONG_TERM: 'LONG_TERM',
+  GUEST_ONLY: 'GUEST_ONLY',
 };
 
 const HousingRequestForm = () => {
@@ -13,21 +13,21 @@ const HousingRequestForm = () => {
 
   const validateDates = (values) => {
     const { startDate, endDate } = values;
-    if (!startDate || !endDate) return "Les deux dates sont obligatoires.";
+    if (!startDate || !endDate) return "Both start and end dates are required.";
     const start = new Date(startDate);
     const end = new Date(endDate);
-    if (end <= start) return "La date de fin doit être après la date de début.";
+    if (end <= start) return "End date must be after start date.";
     return null;
   };
 
   const step1 = {
-    title: "Informations de base",
-    description: "Remplissez les informations principales liées à votre demande",
+    title: "Basic Information",
+    description: "Fill in the main details related to your request",
     fields: [
       {
         type: "select",
         name: "housingType",
-        label: "Type d'hébergement",
+        label: "Housing Type",
         required: true,
         options: Object.entries(HousingType).map(([key, val]) => ({
           value: val,
@@ -37,20 +37,20 @@ const HousingRequestForm = () => {
       {
         type: "date",
         name: "startDate",
-        label: "Date de début",
+        label: "Start Date",
         required: true
       },
       {
         type: "date",
         name: "endDate",
-        label: "Date de fin",
+        label: "End Date",
         required: true,
         validate: (val, all) => validateDates(all),
       },
       {
         type: "number",
         name: "numGuests",
-        label: "Nombre d'invités",
+        label: "Number of Guests",
         required: true,
         min: 0
       }
@@ -58,20 +58,20 @@ const HousingRequestForm = () => {
   };
 
   const step2 = {
-    title: "Documents justificatifs",
-    description: "Ajoutez les documents nécessaires à l'étude de votre demande",
+    title: "Supporting Documents",
+    description: "Upload the required documents for your request",
     fields: [
       {
         type: "file",
-        name: "justificatif",
-        label: "Lettre de justification / convocation",
+        name: "justification",
+        label: "Justification Letter (PDF, DOC, DOCX)",
         accept: ".pdf,.doc,.docx",
         required: true
       },
       {
         type: "file",
         name: "guestList",
-        label: "Liste des invités (CSV ou PDF)",
+        label: "Guest List (CSV or PDF)",
         accept: ".csv,.pdf",
         required: false
       }
@@ -83,9 +83,9 @@ const HousingRequestForm = () => {
   const handleSubmit = (data) => {
     const payload = {
       ...data,
-      status: 'EN_ATTENTE',
+      status: 'PENDING',
       submissionDate: new Date().toISOString(),
-      id: Math.random().toString(36).slice(2, 10) // temporaire
+      id: Math.random().toString(36).slice(2, 10) // temporary ID
     };
     setSubmission(payload);
   };
@@ -93,15 +93,15 @@ const HousingRequestForm = () => {
   if (submission) {
     return (
       <div className="bg-white p-6 rounded-lg shadow-md max-w-3xl mx-auto text-center">
-        <h2 className="text-2xl font-semibold text-main-green mb-4">Demande soumise avec succès</h2>
+        <h2 className="text-2xl font-semibold text-main-green mb-4">Request submitted successfully</h2>
         <p className="text-gray-600 mb-6">
-          Votre demande d’hébergement a été enregistrée sous la référence <strong>{submission.id}</strong>.
+          Your housing request has been registered under reference <strong>{submission.id}</strong>.
         </p>
         <button
           onClick={() => setSubmission(null)}
           className="px-6 py-2 bg-main-green text-white rounded-lg hover:bg-darker-green transition"
         >
-          Soumettre une nouvelle demande
+          Submit another request
         </button>
       </div>
     );
@@ -111,7 +111,7 @@ const HousingRequestForm = () => {
     <MultiStepForm
       steps={steps}
       onSubmit={handleSubmit}
-      title="Demande d’Hébergement"
+      title="Housing Request Form"
       initialValues={{
         housingType: HousingType.SHORT_TERM,
         numGuests: 0,
