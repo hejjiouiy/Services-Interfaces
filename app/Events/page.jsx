@@ -7,7 +7,7 @@ import EventStatusManager from './moduleComponents/EventStatusManager';
 import ApprovedEventsList from './moduleComponents/ApprovedEventsList';
 
 const EventPage = () => {
-  const [selectedSection, setSelectedSection] = useState("Soumettre");
+  const [selectedSection, setSelectedSection] = useState("Submit Request");
   const [isSectionMenuOpen, setIsSectionMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
@@ -20,33 +20,33 @@ const EventPage = () => {
 
   const sections = [
     {
-      name: "Soumettre",
+      name: "Submit Request",
       component: <EventRequestForm />,
-      description: "Soumettez une nouvelle demande d’événement.",
+      description: "Submit a new event request.",
       notification: 0
     },
     {
-      name: "Mes demandes",
+      name: "My Requests",
       component: <EventRequestList />,
-      description: "Consultez et suivez vos demandes d’événements.",
+      description: "View and track your submitted event requests.",
       notification: 0
     },
     {
       name: "Validation",
       component: <EventValidationPanel />,
-      description: "Examinez et validez les demandes d’événements.",
+      description: "Review and validate submitted event requests.",
       notification: 2
     },
     {
-      name: "Suivi",
+      name: "Status Management",
       component: <EventStatusManager />,
-      description: "Mettez à jour le statut des événements validés.",
+      description: "Update the status of approved events.",
       notification: 1
     },
     {
-      name: "Événements approuvés",
+      name: "Approved Events",
       component: <ApprovedEventsList />,
-      description: "Liste des événements validés et publiés.",
+      description: "List of validated and published events.",
       notification: 0
     }
   ];

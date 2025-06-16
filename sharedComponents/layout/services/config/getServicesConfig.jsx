@@ -8,11 +8,6 @@ import MissionsDataTable from '../../../../app/Process/Missions/moduleComponents
 import MissionsCardView from '../../../../app/Process/Missions/moduleComponents/MissionsCardView';
 import MissionsAnalysisPage from '../../../../app/Process/Missions/moduleComponents/MissionsAnalysis/MissionsAnalysisPage';
 import PowerBIAnalysisPage from '../../../../app/Process/Missions/moduleComponents/PowerBIAnalysisPage';
-import EventRequestForm from '../../../../app/Events/moduleComponents/EventRequestForm';
-import EventRequestList from '../../../../app/Events/moduleComponents/EventRequestList';
-import EventValidationPanel from '../../../../app/Events/moduleComponents/EventValidationPanel';
-import EventStatusManager from '../../../../app/Events/moduleComponents/EventStatusManager';
-import ApprovedEventsList from '../../../../app/Events/moduleComponents/ApprovedEventsList';
 import HousingRequestForm from '../../../../app/Process/Housing/moduleComponents/HousingRequestForm';
 import HousingRequestList from '../../../../app/Process/Housing/moduleComponents/HousingRequestList';
 import HousingValidationPanel from '../../../../app/Process/Housing/moduleComponents/HousingValidationPanel';
