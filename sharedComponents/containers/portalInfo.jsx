@@ -1,7 +1,7 @@
 'use client';
 import React, { useState, useEffect, useRef , useMemo } from 'react';
 import Link from 'next/link';
-import StatsSection from './statsSection';
+import StatsSection from './portalInfo/statsSection';
 
 
 const PortalInfo = () => {

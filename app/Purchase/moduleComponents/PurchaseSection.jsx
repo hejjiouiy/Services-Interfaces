@@ -1,9 +1,10 @@
 'use client'
 import React, { useState, useEffect } from 'react';
-import PurchaseRequestForm from './PurchaseRequestForm';
-import PurchaseDataTable from './PurchaseDataTable';
+import PurchaseRequestForm from './PurchaseRequestForm/PurchaseRequestForm';
+import PurchaseDataTable from './PurchaseDataTable/PurchaseDataTable';
 import PowerBIAnalysisPage from '../../../app/Process/Missions/moduleComponents/PowerBIAnalysisPage';
-import PurchasesAnalysisPage from './PurchasesAnalysisPage';
+import PurchasesAnalysisPage from './PurchasesAnalysisPage/PurchasesAnalysisPage';
+import samplePurchases from './PurchaseDataTable/config/sampleData'
 
 const PurchaseSection = () => {
     const [selectedSection, setSelectedSection] = useState("My Orders");
@@ -25,7 +26,7 @@ const PurchaseSection = () => {
     const sections = [
         { 
             name: "My Orders", 
-            component: <PurchaseDataTable />,
+            component: <PurchaseDataTable initialData={samplePurchases} />,
             description: "View and manage all your purchase orders",
             notification: 3
         },
