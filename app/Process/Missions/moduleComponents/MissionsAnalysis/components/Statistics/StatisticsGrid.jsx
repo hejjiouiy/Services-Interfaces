@@ -1,8 +1,8 @@
 import StatisticCard from './StatisticCard';
 import TotalMissionsIcon from '../Icons/TotalMissionsIcon';
-import OngoingMissionsIcon from '../icons/OngoingMissionsIcon';
-import BudgetIcon from '../icons/BudgetIcon';
-import DurationIcon from '../icons/DurationIcon';
+import OngoingMissionsIcon from '../Icons/OngoingMissionsIcon';
+import BudgetIcon from '../Icons/BudgetIcon';
+import DurationIcon from '../Icons/DurationIcon';
 import { formatAmount } from '../../utils/formatters';
 
 const StatisticsGrid = ({ statistics }) => (

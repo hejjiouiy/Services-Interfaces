@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 
-const HousingFileUpload = ({ label, acceptedTypes, onFileChange }) => {
+const GuestUploader = ({ onUpload, accept = '.csv,.pdf', label = 'Upload Guest List' }) => {
   return (
     <div className="mb-4">
       <label className="block text-sm font-medium text-darker-beige mb-1">
@@ -9,12 +9,12 @@ const HousingFileUpload = ({ label, acceptedTypes, onFileChange }) => {
       </label>
       <input
         type="file"
-        accept={acceptedTypes}
-        onChange={(e) => onFileChange(e.target.files?.[0] || null)}
+        accept={accept}
+        onChange={(e) => onUpload(e.target.files?.[0] || null)}
         className="block w-full text-sm text-gray-700 border border-gray-300 rounded-lg shadow-sm file:bg-main-beige file:text-main-green file:font-medium file:px-4 file:py-1 file:rounded-md file:border-0 file:cursor-pointer hover:file:bg-main-green/10 transition"
       />
     </div>
   );
 };
 
-export default HousingFileUpload;
+export default GuestUploader;

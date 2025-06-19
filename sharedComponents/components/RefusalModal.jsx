@@ -1,34 +1,58 @@
 'use client';
 import React, { useState } from 'react';
 
-export default function RefusalModal({ onCancel, onValidate }) {
+export default function RefusalModal({
+  onCancel,
+  onValidate,
+  title = "Refusal Reason",
+  placeholder = "Please enter the reason for refusal...",
+  confirmLabel = "Confirm Refusal",
+  cancelLabel = "Cancel"
+}) {
   const [reason, setReason] = useState('');
+  const [error, setError] = useState(null);
+
+  const handleConfirm = () => {
+    if (!reason.trim()) {
+      setError("Reason is required.");
+      return;
+    }
+    setError(null);
+    onValidate(reason.trim());
+  };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-      <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-md">
-        <h2 className="text-xl font-semibold mb-4">Refusal Reason</h2>
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="refusal-title"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40 backdrop-blur-sm"
+    >
+      <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md animate-fade-in">
+        <h2 id="refusal-title" className="text-xl font-semibold text-main-green mb-4">
+          {title}
+        </h2>
         <textarea
           value={reason}
           onChange={(e) => setReason(e.target.value)}
           rows={4}
-          className="w-full p-2 border rounded mb-4"
-          placeholder="Please enter the reason for refusal..."
+          className="w-full p-3 border border-gray-300 rounded text-sm focus:ring-2 focus:ring-main-green"
+          placeholder={placeholder}
         />
-        <div className="flex justify-end space-x-2">
+        {error && <p className="text-red-600 text-sm mt-2">{error}</p>}
+
+        <div className="flex justify-end gap-3 mt-6">
           <button
             onClick={onCancel}
-            className="px-4 py-2 bg-gray-300 text-black rounded hover:bg-gray-400"
+            className="px-4 py-2 rounded bg-gray-100 hover:bg-gray-200 text-sm"
           >
-            Cancel
+            {cancelLabel}
           </button>
           <button
-            onClick={() => {
-              if (reason.trim()) onValidate(reason.trim());
-            }}
-            className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
+            onClick={handleConfirm}
+            className="px-4 py-2 rounded bg-red-600 text-white hover:bg-red-700 text-sm"
           >
-            Confirm Refusal
+            {confirmLabel}
           </button>
         </div>
       </div>
