@@ -1,6 +1,8 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import StatusBadge from '../../../sharedComponents/components/StatusBadge';
+import SectionTitle from '../../../sharedComponents/components/SectionTitle';
+import LoadingSpinner from '../../../sharedComponents/components/LoadingSpinner';
 
 const ApprovedEventsList = () => {
   const [events, setEvents] = useState([]);
@@ -56,22 +58,11 @@ const ApprovedEventsList = () => {
     setSelectedEventId((prevId) => (prevId === id ? null : id));
   };
 
-  if (loading) {
-    return (
-      <div className="flex justify-center items-center h-64">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-main-green"></div>
-      </div>
-    );
-  }
+  if (loading) return <LoadingSpinner />;
 
   if (events.length === 0) {
     return (
       <div className="text-center py-12">
-        <div className="w-16 h-16 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center">
-          <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3a4 4 0 118 0v4m-4 12v-8m0 0V7a4 4 0 118 0v8m-8 4h8"></path>
-          </svg>
-        </div>
         <h3 className="text-lg font-medium text-darker-beige mb-2">No approved events</h3>
         <p className="text-gray-500 mb-4">No events have been approved or published yet.</p>
       </div>
@@ -80,7 +71,7 @@ const ApprovedEventsList = () => {
 
   return (
     <div className="space-y-6">
-      <h2 className="text-2xl font-bold text-main-green">Approved Events</h2>
+      <SectionTitle title="Approved Events" />
 
       <div className="grid gap-6">
         {events.map((event) => (
@@ -104,6 +95,7 @@ const ApprovedEventsList = () => {
                   <span className="text-xs text-gray-500">#{event.id}</span>
                 </div>
               </div>
+
               {selectedEventId === event.id && (
                 <div className="mt-4 pt-4 border-t border-gray-200">
                   <div className="grid md:grid-cols-2 gap-4 text-sm text-gray-700">

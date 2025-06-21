@@ -1,6 +1,4 @@
-import React from 'react';
-
-const NavigationButtons = ({ currentStep, totalSteps, onPrevious, onNext, onSubmit }) => {
+const NavigationButtons = ({ currentStep, totalSteps, onPrevious, onNext, onSubmit, isStepValid }) => {
   return (
     <div className="mt-8 flex justify-between">
       {currentStep > 0 ? (

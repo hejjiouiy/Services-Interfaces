@@ -1,5 +1,5 @@
 'use client';
-import MultiStepForm from '../../../../sharedComponents/components/multiStepForm';
+import MultiStepForm from '../../../../sharedComponents/components/MultiStepForm/MultiStepForm';
 import React, { useState } from 'react';
 import HousingFileUpload from './HousingFileUpload';
 

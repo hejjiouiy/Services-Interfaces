@@ -1,10 +1,12 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import StatusBadge from '../../../sharedComponents/components/StatusBadge';
+import SectionTitle from '../../../sharedComponents/components/SectionTitle';
+import LoadingSpinner from '../../../sharedComponents/components/LoadingSpinner';
 
 const EventRequestList = () => {
   const [requests, setRequests] = useState([]);
-  const [selectedRequest, setSelectedRequest] = useState(null);
+  const [selectedId, setSelectedId] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -49,22 +51,15 @@ const EventRequestList = () => {
     }, 1000);
   }, []);
 
-  if (loading) {
-    return (
-      <div className="flex justify-center items-center h-64">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-main-green"></div>
-      </div>
-    );
-  }
+  const toggleDetails = (id) => {
+    setSelectedId(prev => (prev === id ? null : id));
+  };
+
+  if (loading) return <LoadingSpinner />;
 
   if (requests.length === 0) {
     return (
       <div className="text-center py-12">
-        <div className="w-16 h-16 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center">
-          <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3a4 4 0 118 0v4m-4 12v-8m0 0V7a4 4 0 118 0v8m-8 4h8"></path>
-          </svg>
-        </div>
         <h3 className="text-lg font-medium text-darker-beige mb-2">No event requests found</h3>
         <p className="text-gray-500 mb-4">You haven't submitted any event requests yet.</p>
         <button className="px-4 py-2 bg-main-green text-white rounded-lg hover:bg-darker-green transition">
@@ -76,14 +71,14 @@ const EventRequestList = () => {
 
   return (
     <div className="space-y-6">
-      <h2 className="text-2xl font-bold text-main-green">My Event Requests</h2>
+      <SectionTitle title="My Event Requests" />
 
       <div className="grid gap-6">
         {requests.map((req) => (
           <div
             key={req.id}
             className="bg-white rounded-lg shadow-md border border-gray-200 hover:shadow-lg transition cursor-pointer"
-            onClick={() => setSelectedRequest(selectedRequest?.id === req.id ? null : req)}
+            onClick={() => toggleDetails(req.id)}
           >
             <div className="p-6">
               <div className="flex justify-between items-start mb-4">
@@ -101,45 +96,16 @@ const EventRequestList = () => {
                 </div>
               </div>
 
-              {selectedRequest?.id === req.id && (
-                <div className="mt-4 pt-4 border-t border-gray-200">
-                  <div className="grid md:grid-cols-2 gap-4 text-sm text-gray-700">
-                    <div>
-                      <h4 className="font-medium text-main-green mb-2">Request Details</h4>
-                      <p><strong>Type:</strong> {req.eventType}</p>
-                      <p><strong>Submitted on:</strong> {new Date(req.submissionDate).toLocaleDateString('en-GB')}</p>
-                      <p><strong>Routed to:</strong> {req.routedTo}</p>
-                    </div>
-                    <div>
-                      <h4 className="font-medium text-main-green mb-2">Available Actions</h4>
-                      <div className="space-y-2">
-                        {req.status === 'REJECTED' && (
-                          <button className="text-blue-600 hover:text-blue-800 text-sm">
-                            📄 View comments
-                          </button>
-                        )}
-                        {(req.status === 'PENDING' || req.status === 'UNDER_REVIEW') && (
-                          <button className="text-orange-600 hover:text-orange-800 text-sm">
-                            ✏️ Edit request
-                          </button>
-                        )}
-                        <button className="text-gray-600 hover:text-gray-800 text-sm">
-                          📞 Contact reviewer
-                        </button>
-                      </div>
-                    </div>
-                  </div>
+              {selectedId === req.id && (
+                <div className="mt-4 pt-4 border-t border-gray-200 text-sm text-gray-700">
+                  <p><strong>Type:</strong> {req.eventType}</p>
+                  <p><strong>Submitted on:</strong> {new Date(req.submissionDate).toLocaleDateString('en-GB')}</p>
+                  <p><strong>Routed to:</strong> {req.routedTo}</p>
                 </div>
               )}
             </div>
           </div>
         ))}
-      </div>
-
-      <div className="text-center">
-        <button className="px-6 py-2 bg-main-green text-white rounded-lg hover:bg-darker-green transition">
-          Submit New Request
-        </button>
       </div>
     </div>
   );

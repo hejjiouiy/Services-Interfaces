@@ -1,11 +1,17 @@
 'use client';
 import React, { useState, useEffect } from 'react';
+import SectionTitle from '../../../sharedComponents/components/SectionTitle';
 import StatusBadge from '../../../sharedComponents/components/StatusBadge';
+import StatusStepper from '../../../sharedComponents/components/StatusStepper';
+import LoadingSpinner from '../../../sharedComponents/components/LoadingSpinner';
+
+const allowedTransitions = ['APPROVED', 'IN_PREPARATION', 'READY', 'COMPLETED', 'CANCELLED'];
 
 const EventStatusManager = () => {
   const [managedEvents, setManagedEvents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [updatedStatuses, setUpdatedStatuses] = useState({});
+  const [successMap, setSuccessMap] = useState({});
 
   useEffect(() => {
     setTimeout(() => {
@@ -16,7 +22,7 @@ const EventStatusManager = () => {
           eventDate: '2025-07-30',
           venue: 'UM6P Stadium',
           status: 'APPROVED',
-          description: 'A multi-university festival focused on sports and culture.',
+          description: 'A multi-university festival focused on sports and culture.'
         },
         {
           id: 'EVT202',
@@ -24,7 +30,7 @@ const EventStatusManager = () => {
           eventDate: '2025-08-15',
           venue: 'FMS Auditorium',
           status: 'APPROVED',
-          description: 'Talks, panels and workshops promoting mental wellbeing.',
+          description: 'Talks, panels and workshops promoting mental wellbeing.'
         }
       ];
       setManagedEvents(mockApproved);
@@ -33,19 +39,22 @@ const EventStatusManager = () => {
   }, []);
 
   const handleStatusChange = (id, newStatus) => {
-    setUpdatedStatuses((prev) => ({
-      ...prev,
-      [id]: newStatus,
-    }));
+    setUpdatedStatuses((prev) => ({ ...prev, [id]: newStatus }));
+    setSuccessMap((prev) => ({ ...prev, [id]: false }));
   };
 
-  if (loading) {
-    return (
-      <div className="flex justify-center items-center h-64">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-main-green"></div>
-      </div>
+  const saveNewStatus = (event) => {
+    const newStatus = updatedStatuses[event.id];
+    if (!newStatus || newStatus === event.status) return;
+
+    // simulate backend update
+    setManagedEvents((prev) =>
+      prev.map((ev) => (ev.id === event.id ? { ...ev, status: newStatus } : ev))
     );
-  }
+    setSuccessMap((prev) => ({ ...prev, [event.id]: true }));
+  };
+
+  if (loading) return <LoadingSpinner />;
 
   if (managedEvents.length === 0) {
     return (
@@ -63,11 +72,13 @@ const EventStatusManager = () => {
 
   return (
     <div className="space-y-6">
-      <h2 className="text-2xl font-bold text-main-green">Event Status Management</h2>
+      <SectionTitle title="Event Status Management" />
 
       <div className="grid gap-6">
         {managedEvents.map((event) => {
           const currentStatus = updatedStatuses[event.id] || event.status;
+          const isChanged = currentStatus !== event.status;
+          const showSuccess = successMap[event.id];
 
           return (
             <div
@@ -91,7 +102,9 @@ const EventStatusManager = () => {
 
                 <p className="text-sm text-gray-700 mb-4">{event.description}</p>
 
-                <div className="flex flex-col md:flex-row md:items-center gap-4">
+                <StatusStepper steps={allowedTransitions} currentStatus={currentStatus} />
+
+                <div className="flex flex-col md:flex-row md:items-center gap-4 mt-4">
                   <label htmlFor={`status-${event.id}`} className="text-sm font-medium text-darker-beige">
                     Update status:
                   </label>
@@ -101,32 +114,26 @@ const EventStatusManager = () => {
                     value={currentStatus}
                     onChange={(e) => handleStatusChange(event.id, e.target.value)}
                   >
-                    <option value="APPROVED">Approved</option>
-                    <option value="IN_PREPARATION">In Preparation</option>
-                    <option value="READY">Ready</option>
-                    <option value="COMPLETED">Completed</option>
-                    <option value="CANCELLED">Cancelled</option>
+                    {allowedTransitions.map((status) => (
+                      <option key={status} value={status}>
+                        {status.replace(/_/g, ' ')}
+                      </option>
+                    ))}
                   </select>
                   <button
-                    className="px-4 py-2 bg-main-green text-white rounded-lg hover:bg-darker-green transition"
-                    onClick={() => {
-                      const newStatus = updatedStatuses[event.id];
-                      if (!newStatus || newStatus === event.status) {
-                        alert("No change detected.");
-                        return;
-                      }
-
-                      alert(`Status of ${event.id} updated to "${newStatus}" ✅`);
-
-                      setManagedEvents((prev) =>
-                        prev.map((ev) =>
-                          ev.id === event.id ? { ...ev, status: newStatus } : ev
-                        )
-                      );
-                    }}
+                    disabled={!isChanged}
+                    onClick={() => saveNewStatus(event)}
+                    className={`px-4 py-2 rounded-lg text-white transition ${
+                      isChanged
+                        ? 'bg-main-green hover:bg-darker-green'
+                        : 'bg-gray-300 cursor-not-allowed'
+                    }`}
                   >
                     Save
                   </button>
+                  {showSuccess && (
+                    <span className="text-green-600 text-sm font-medium">✔ Status updated</span>
+                  )}
                 </div>
               </div>
             </div>
