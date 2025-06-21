@@ -1,6 +1,8 @@
 'use client';
-import MultiStepForm from '../../../../sharedComponents/components/MultiStepForm/MultiStepForm';
 import React, { useState } from 'react';
+import MultiStepForm from '../../../../sharedComponents/components/MultiStepForm/MultiStepForm';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 import HousingFileUpload from './HousingFileUpload';
 
 const HousingType = {
@@ -9,26 +11,26 @@ const HousingType = {
   GUEST_ONLY: 'GUEST_ONLY',
 };
 
+const getMinStartDate = () => {
+  const today = new Date();
+  today.setDate(today.getDate() + 3); // 3 jours d'avance
+  return today;
+};
+
+const validateStartDate = (value) => {
+  if (!value) return 'Start date is required.';
+  if (value < getMinStartDate()) return 'Start date must be at least 3 days from today.';
+  return null;
+};
+
+const validateEndDate = (value, allValues) => {
+  if (!value) return 'End date is required.';
+  if (value < allValues.startDate) return 'End date cannot be before start date.';
+  return null;
+};
+
 const HousingRequestForm = () => {
   const [submission, setSubmission] = useState(null);
-
-  const validateDates = (values) => {
-    const { startDate, endDate } = values;
-    if (!startDate || !endDate) return 'Both dates are required.';
-
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    const start = new Date(startDate);
-    const end = new Date(endDate);
-
-    const minAdvanceDays = 3;
-    const minStartDate = new Date(today);
-    minStartDate.setDate(minStartDate.getDate() + minAdvanceDays);
-
-    if (start < minStartDate) return `Start date must be at least ${minAdvanceDays} days from today.`;
-    if (end <= start) return 'End date must be after start date.';
-    return null;
-  };
 
   const step1 = {
     title: 'Basic Information',
@@ -39,28 +41,46 @@ const HousingRequestForm = () => {
         name: 'housingType',
         label: 'Housing Type',
         required: true,
-        options: Object.entries(HousingType).map(([key, val]) => ({
+        options: Object.entries(HousingType).map(([_, val]) => ({
           value: val,
           label: val.replace('_', ' ').toLowerCase(),
         })),
       },
       {
-        type: 'date',
+        type: 'custom',
         name: 'startDate',
         label: 'Start Date',
         required: true,
-        min: (() => {
-          const today = new Date();
-          today.setDate(today.getDate() + 3);
-          return today.toISOString().split('T')[0];
-        })(),
+        render: ({ value, onChange, inputClassName }) => (
+          <div className="relative z-50">
+            <DatePicker
+              selected={value}
+              onChange={onChange}
+              minDate={getMinStartDate()}
+              placeholderText="Select start date"
+              className={inputClassName}
+            />
+          </div>
+        ),
+        validate: validateStartDate
       },
       {
-        type: 'date',
+        type: 'custom',
         name: 'endDate',
         label: 'End Date',
         required: true,
-        validate: (val, all) => validateDates(all),
+        render: ({ value, onChange, inputClassName }) => (
+          <div className="relative z-50">
+            <DatePicker
+              selected={value}
+              onChange={onChange}
+              minDate={new Date()}
+              placeholderText="Select end date"
+              className={inputClassName}
+            />
+          </div>
+        ),
+        validate: validateEndDate
       },
       {
         type: 'number',
@@ -81,7 +101,7 @@ const HousingRequestForm = () => {
         name: 'justificatif',
         label: 'Justification Letter',
         required: true,
-        render: ({ value, onChange }) => (
+        render: ({ onChange }) => (
           <HousingFileUpload
             label="Upload Justification Letter"
             acceptedTypes=".pdf,.doc,.docx"
@@ -95,7 +115,7 @@ const HousingRequestForm = () => {
         name: 'guestList',
         label: 'Guest List (optional)',
         required: false,
-        render: ({ value, onChange }) => (
+        render: ({ onChange }) => (
           <HousingFileUpload
             label="Upload Guest List (CSV or PDF)"
             acceptedTypes=".csv,.pdf"
@@ -105,8 +125,6 @@ const HousingRequestForm = () => {
       },
     ],
   };
-
-  const steps = [step1, step2];
 
   const handleSubmit = (data) => {
     const payload = {
@@ -137,7 +155,7 @@ const HousingRequestForm = () => {
 
   return (
     <MultiStepForm
-      steps={steps}
+      steps={[step1, step2]}
       onSubmit={handleSubmit}
       title="Housing Request Form"
       initialValues={{
