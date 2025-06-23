@@ -1,7 +1,6 @@
 
 import React, { useState } from 'react';
 import Card from '../../../components/card';
-import Approved from '../../../components/approved';
 import Form from '../../../components/form';
 import MissionRequestForm from '../../../../app/Process/Missions/moduleComponents/MissionRequestForm/MissionRequestForm';
 import MissionsDataTable from '../../../../app/Process/Missions/moduleComponents/MissionsDataTable/MissionsDataTable';
@@ -13,6 +12,10 @@ import HousingRequestList from '../../../../app/Process/Housing/moduleComponents
 import HousingValidationPanel from '../../../../app/Process/Housing/moduleComponents/HousingValidationPanel';
 import HousingAssignmentPanel from '../../../../app/Process/Housing/moduleComponents/HousingAssignmentPanel';
 import HousingGuestManager from '../../../../app/Process/Housing/moduleComponents/HousingGuestManager';
+import CateringRequestForm from '../../../../app/Process/Catering/moduleComponents/CateringRequestForm';
+import CateringRequestList from '../../../../app/Process/Catering/moduleComponents/CateringRequestList';
+import CateringRequestManager from '../../../../app/Process/Catering/moduleComponents/CateringRequestManager';
+
 
 
 
@@ -95,23 +98,18 @@ export const getServicesConfig = () => ({
   ],
   "Catering": [
     { 
-      name: "Event Catering", 
-      component: <Form formType="event-catering" />,
+      name: "Catering Request", 
+      component: <CateringRequestForm />,
       description: "Order catering services for events and meetings"
     },
     { 
-      name: "Daily Meal Services", 
-      component: <Card status="active" type="meal" />,
+      name: "My Requests", 
+      component: <CateringRequestList />,
       description: "View and modify your daily meal plan"
     },
     { 
-      name: "Special Dietary Requests", 
-      component: <Form formType="dietary" />,
-      description: "Submit special dietary requirements and restrictions"
-    },
-    { 
-      name: "Cafeteria Services", 
-      component: <Card status="info" type="cafeteria" />,
+      name: "Requests Management - edit", 
+      component: <CateringRequestManager />,
       description: "View cafeteria hours, menus, and information"
     }
   ],

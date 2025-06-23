@@ -13,19 +13,20 @@ const HousingType = {
 
 const getMinStartDate = () => {
   const today = new Date();
-  today.setDate(today.getDate() + 3); // 3 jours d'avance
+  today.setDate(today.getDate() + 42); // 6 semaines
   return today;
 };
 
 const validateStartDate = (value) => {
   if (!value) return 'Start date is required.';
-  if (value < getMinStartDate()) return 'Start date must be at least 3 days from today.';
+  if (value < getMinStartDate()) return 'Start date must be at least 6 weeks from today.';
   return null;
 };
 
 const validateEndDate = (value, allValues) => {
   if (!value) return 'End date is required.';
   if (value < allValues.startDate) return 'End date cannot be before start date.';
+  if (value < getMinStartDate()) return 'End date must be at least 6 weeks from today.';
   return null;
 };
 
@@ -41,7 +42,7 @@ const HousingRequestForm = () => {
         name: 'housingType',
         label: 'Housing Type',
         required: true,
-        options: Object.entries(HousingType).map(([_, val]) => ({
+        options: Object.entries(HousingType).map(([key, val]) => ({
           value: val,
           label: val.replace('_', ' ').toLowerCase(),
         })),
@@ -52,35 +53,45 @@ const HousingRequestForm = () => {
         label: 'Start Date',
         required: true,
         render: ({ value, onChange, inputClassName }) => (
-          <div className="relative z-50">
+          <div className="relative z-50 mb-4">
             <DatePicker
               selected={value}
               onChange={onChange}
               minDate={getMinStartDate()}
               placeholderText="Select start date"
               className={inputClassName}
+              wrapperClassName="date-picker-wrapper"
+              popperPlacement="bottom-start"
+              popperModifiers={[
+                { name: 'preventOverflow', options: { boundary: 'viewport' } },
+              ]}
             />
           </div>
         ),
-        validate: validateStartDate
+        validate: validateStartDate,
       },
       {
         type: 'custom',
         name: 'endDate',
         label: 'End Date',
         required: true,
-        render: ({ value, onChange, inputClassName }) => (
-          <div className="relative z-50">
+        render: ({ value, onChange, inputClassName, values }) => (
+          <div className="relative z-40 mb-4">
             <DatePicker
               selected={value}
               onChange={onChange}
-              minDate={new Date()}
+              minDate={values?.startDate > getMinStartDate() ? values.startDate : getMinStartDate()}
               placeholderText="Select end date"
               className={inputClassName}
+              wrapperClassName="date-picker-wrapper"
+              popperPlacement="bottom-start"
+              popperModifiers={[
+                { name: 'preventOverflow', options: { boundary: 'viewport' } },
+              ]}
             />
           </div>
         ),
-        validate: validateEndDate
+        validate: validateEndDate,
       },
       {
         type: 'number',
@@ -101,7 +112,7 @@ const HousingRequestForm = () => {
         name: 'justificatif',
         label: 'Justification Letter',
         required: true,
-        render: ({ onChange }) => (
+        render: ({ value, onChange }) => (
           <HousingFileUpload
             label="Upload Justification Letter"
             acceptedTypes=".pdf,.doc,.docx"
@@ -115,7 +126,7 @@ const HousingRequestForm = () => {
         name: 'guestList',
         label: 'Guest List (optional)',
         required: false,
-        render: ({ onChange }) => (
+        render: ({ value, onChange }) => (
           <HousingFileUpload
             label="Upload Guest List (CSV or PDF)"
             acceptedTypes=".csv,.pdf"
@@ -125,6 +136,8 @@ const HousingRequestForm = () => {
       },
     ],
   };
+
+  const steps = [step1, step2];
 
   const handleSubmit = (data) => {
     const payload = {
@@ -155,7 +168,7 @@ const HousingRequestForm = () => {
 
   return (
     <MultiStepForm
-      steps={[step1, step2]}
+      steps={steps}
       onSubmit={handleSubmit}
       title="Housing Request Form"
       initialValues={{
