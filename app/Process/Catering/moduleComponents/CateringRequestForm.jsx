@@ -33,6 +33,43 @@ const CateringRequestForm = () => {
         required: true,
       },
       {
+        type: 'custom',
+        name: 'category',
+        label: 'Catégorie',
+        required: true,
+        render: ({ value, onChange, inputClassName, values }) => {
+          const optionsByType = {
+            PAUSE_CAFE: [
+              { value: 'STD', label: 'Standard' },
+              { value: 'UP', label: 'Améliorée' },
+              { value: 'VIP', label: 'VIP' },
+            ],
+            SELF: [
+              { value: 'SELF1', label: 'Self 1' },
+              { value: 'SELF2', label: 'Self 2' },
+              { value: 'SELF3', label: 'Self 3' },
+            ],
+            FONTAINE: [
+              { value: 'F48', label: 'Fontaine (48h)' },
+              { value: 'F72', label: 'Fontaine (72h)' },
+            ],
+            EXTRAS: [
+              { value: 'E48', label: 'Extras (48h)' },
+              { value: 'E72', label: 'Extras (72h)' },
+            ],
+            VIP: [{ value: 'TABLE', label: 'Service à table' }],
+          };
+          const opts = optionsByType[values?.serviceType] ?? [];
+          return (
+            <select className={inputClassName} value={value ?? ''} onChange={e => onChange(e.target.value)}>
+              <option value="" disabled>Choisir…</option>
+              {opts.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
+            </select>
+          );
+        },
+        validate: (v) => !v ? 'Catégorie requise.' : null,
+      },
+      {
         type: 'select',
         name: 'serviceType',
         label: 'Type de prestation',
