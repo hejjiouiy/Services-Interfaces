@@ -8,7 +8,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 const optionsByType = {
   PAUSE_CAFE: [
     { value: 'STD',  label: 'Standard' },
-    { value: 'UP',   label: 'Améliorée' },
+    { value: 'UP',   label: 'Enhanced' },
     { value: 'VIP',  label: 'VIP' },
   ],
   SELF: [
@@ -17,14 +17,14 @@ const optionsByType = {
     { value: 'SELF3', label: 'Self 3' },
   ],
   FONTAINE: [
-    { value: 'F48', label: 'Fontaine (48h)' },
-    { value: 'F72', label: 'Fontaine (72h)' },
+    { value: 'F48', label: 'Water dispenser (48h)' },
+    { value: 'F72', label: 'Water dispenser (72h)' },
   ],
   EXTRAS: [
     { value: 'E48', label: 'Extras (48h)' },
     { value: 'E72', label: 'Extras (72h)' },
   ],
-  VIP: [{ value: 'TABLE', label: 'Service à table' }],
+  VIP: [{ value: 'TABLE', label: 'Table service' }],
 };
 
 const getMinDateForType = (type) => {
@@ -38,7 +38,7 @@ const getMinDateForType = (type) => {
 
 const isValidDate = (v) => v instanceof Date && !Number.isNaN(v.getTime());
 
-// Récupère le type courant depuis différents emplacements possibles selon l’impl implémentation du MultiStepForm
+// Get the current service type from various props depending on MultiStepForm internals
 const getCurrentTypeFrom = (p) =>
   p?.values?.serviceType ??
   p?.formValues?.serviceType ??
@@ -50,21 +50,21 @@ const CateringRequestForm = () => {
   const [submittedData, setSubmittedData] = useState(null);
 
   const step1 = {
-    title: 'Informations générales',
-    description: 'Détails de base sur votre demande de restauration.',
+    title: 'General information',
+    description: 'Basic details about your catering request.',
     fields: [
       {
         type: 'text',
         name: 'title',
-        label: 'Objet de la demande',
+        label: 'Request subject',
         required: true,
       },
 
-      // TYPE AVANT CATEGORY
+      // Service type BEFORE category
       {
         type: 'select',
         name: 'serviceType',
-        label: 'Type de prestation',
+        label: 'Service type',
         required: true,
         options: ['PAUSE_CAFE', 'SELF', 'VIP', 'FONTAINE', 'EXTRAS'].map((type) => ({
           label: type.replace(/_/g, ' '),
@@ -75,7 +75,7 @@ const CateringRequestForm = () => {
       {
         type: 'custom',
         name: 'category',
-        label: 'Catégorie',
+        label: 'Category',
         required: true,
         render: (p) => {
           const { value, onChange, inputClassName } = p;
@@ -84,23 +84,23 @@ const CateringRequestForm = () => {
           const safeValue = opts.some(o => o.value === value) ? value : '';
           return (
             <select
-              key={currentType} // re-mount quand le type change
+              key={currentType} // re-mount when service type changes
               className={inputClassName}
               value={safeValue}
-              onChange={(e) => onChange(e.target.value)} // valeur brute
+              onChange={(e) => onChange(e.target.value)} // raw value
             >
-              <option value="" disabled>Choisir…</option>
+              <option value="" disabled>Choose…</option>
               {opts.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
             </select>
           );
         },
-        validate: (v) => !v ? 'Catégorie requise.' : null,
+        validate: (v) => !v ? 'Category is required.' : null,
       },
 
       {
         type: 'custom',
         name: 'eventDate',
-        label: 'Date souhaitée',
+        label: 'Requested date',
         required: true,
         render: (p) => {
           const { value, onChange, inputClassName } = p;
@@ -111,19 +111,19 @@ const CateringRequestForm = () => {
             <div className="relative z-50 mb-4">
               <DatePicker
                 selected={selectedDate}
-                onChange={(date) => onChange(date)}   // valeur brute (Date)
+                onChange={(date) => onChange(date)}   // raw Date
                 minDate={minDate}
-                placeholderText="Sélectionnez une date"
+                placeholderText="Select a date"
                 className={inputClassName}
               />
             </div>
           );
         },
         validate: (value, p) => {
-          if (!isValidDate(value)) return 'La date est requise.';
+          if (!isValidDate(value)) return 'Date is required.';
           const currentType = getCurrentTypeFrom(p);
           const minDate = getMinDateForType(currentType);
-          if (value < minDate) return 'Veuillez respecter le délai minimal de réservation.';
+          if (value < minDate) return 'Please respect the minimum lead time.';
           return null;
         },
       },
@@ -131,21 +131,21 @@ const CateringRequestForm = () => {
       {
         type: 'radio',
         name: 'period',
-        label: 'Période',
+        label: 'Period',
         required: true,
-        options: ['Matin', 'Après-midi'].map((p) => ({ value: p, label: p })),
+        options: ['Morning', 'Afternoon'].map((p) => ({ value: p, label: p })),
       },
     ],
   };
 
   const step2 = {
-    title: 'Détails logistiques',
-    description: 'Informations spécifiques liées à l’organisation.',
+    title: 'Logistics details',
+    description: 'Specific logistics information.',
     fields: [
-      { type: 'number', name: 'peopleCount', label: 'Nombre de personnes', required: true, min: 1 },
-      { type: 'text',   name: 'location',    label: 'Emplacement ou salle concernée', required: true },
-      { type: 'time',   name: 'time',        label: 'Horaire souhaité', required: true },
-      { type: 'textarea', name: 'justification', label: 'Justification (facultative)', rows: 3 },
+      { type: 'number', name: 'peopleCount', label: 'People count', required: true, min: 1 },
+      { type: 'text',   name: 'location',    label: 'Location / room', required: true },
+      { type: 'time',   name: 'time',        label: 'Requested time', required: true },
+      { type: 'textarea', name: 'justification', label: 'Justification (optional)', rows: 3 },
     ],
   };
 
@@ -162,14 +162,14 @@ const CateringRequestForm = () => {
   if (submittedData) {
     return (
       <div className="bg-white p-6 rounded-lg shadow max-w-3xl mx-auto text-center">
-        <SectionTitle title="Demande de restauration soumise ✅" />
-        <p className="text-gray-600 my-4">Votre demande a été enregistrée avec l'ID :</p>
+        <SectionTitle title="Catering request submitted ✅" />
+        <p className="text-gray-600 my-4">Your request has been recorded with ID:</p>
         <p className="text-main-green text-xl font-bold mb-6">{submittedData.id}</p>
         <button
           onClick={() => setSubmittedData(null)}
           className="bg-main-green text-white px-6 py-2 rounded hover:bg-darker-green"
         >
-          Nouvelle demande
+          New request
         </button>
       </div>
     );
@@ -177,7 +177,7 @@ const CateringRequestForm = () => {
 
   return (
     <div className="p-6">
-      <SectionTitle title="Formulaire de demande de restauration" />
+      <SectionTitle title="Catering request form" />
       <MultiStepForm
         steps={[step1, step2]}
         onSubmit={handleSubmit}
@@ -185,7 +185,7 @@ const CateringRequestForm = () => {
           serviceType: 'PAUSE_CAFE',
           category: '',
           peopleCount: 1,
-          period: 'Matin',
+          period: 'Morning',
           eventDate: null,
         }}
       />
