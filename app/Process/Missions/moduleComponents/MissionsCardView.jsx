@@ -178,6 +178,7 @@ const MissionsCardView = () => {
       mission.pays.toLowerCase().includes(searchQuery.toLowerCase()) ||
       mission.type.toLowerCase().includes(searchQuery.toLowerCase()) ||
       mission.details.toLowerCase().includes(searchQuery.toLowerCase());
+
       
     const matchesStatus = 
       statusFilter === 'ALL' || 
@@ -327,9 +328,11 @@ const MissionsCardView = () => {
               {/* En-tête de carte avec type et statut */}
               <div className="flex items-center justify-between px-6 pt-6 pb-2">
                 <div className="flex items-center">
+                  
                   <div className={`rounded-full p-2 ${statusStyle.icon} ${statusStyle.text}`}>
                     {typeIcons[mission.type]}
                   </div>
+
                   <h3 className="ml-3 text-lg font-semibold text-gray-900">{mission.type}</h3>
                 </div>
                 <span className={`px-3 py-1 rounded-full text-xs font-medium ${statusStyle.bg} ${statusStyle.text}`}>
@@ -339,6 +342,7 @@ const MissionsCardView = () => {
               
               {/* Corps de la carte */}
               <div className="px-6 py-4 flex-grow">
+                <div className="text-lg font-semibold text-gray-900 mb-1">{mission.user?.prenom} {mission.user?.nom} test</div>
                 <div className="text-lg font-semibold text-gray-900 mb-1">{mission.destination}</div>
                 <div className="text-sm text-gray-600 mb-3">{mission.ville}, {mission.pays}</div>
                 

@@ -5,10 +5,14 @@ const StatusFilter = ({ statusFilter, onStatusFilterChange }) => (
     onChange={(e) => onStatusFilterChange(e.target.value)}
   >
     <option value="ALL">Tous les statuts</option>
-    <option value="OUVERTE">Ouvertes</option>
-    <option value="EN_COURS">En cours</option>
-    <option value="TERMINEE">Terminées</option>
-    <option value="ANNULEE">Annulées</option>
+    <option value="Ouverte">🔵 Ouvertes</option>
+    <option value="En attente">⏳ En attente</option>
+    <option value="Validee Hierarchiquement">👔 Validées Hiérarchiquement</option>
+    <option value="Validee budgetairement">💰 Validées Budgétairement</option>
+    <option value="Approuvee">✅ Approuvées</option>
+    <option value="Cloturee">🔒 Clôturées</option>
+    <option value="Refusee">❌ Refusées</option>
   </select>
 );
+
 export default StatusFilter;

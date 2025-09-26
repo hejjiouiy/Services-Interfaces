@@ -5,6 +5,7 @@ import Logo from "./UI/Logo";
 import NavigationLinksContainer from "./navigation/NavigationLinksContainer";
 import useSidebarLogic from "./hooks/useSidebarLogic";
 import { getNavigationConfig } from "./config/navigationConfig";
+import { handleLogout } from "../../../utils/authHelpers";
 const Sidebar = () => {
   const mainLinks = getNavigationConfig();
   

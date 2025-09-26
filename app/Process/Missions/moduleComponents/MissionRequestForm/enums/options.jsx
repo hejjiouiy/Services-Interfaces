@@ -13,3 +13,4 @@ export const getAccommodationOptions = () => [
   { value: "GUEST_HOUSE", label: "Guest House" },
   { value: "OTHER", label: "Other" }
 ];
+

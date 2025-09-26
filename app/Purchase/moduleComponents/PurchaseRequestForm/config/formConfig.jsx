@@ -4,7 +4,7 @@ export const requestTypeConfig = {
     value: "DEMANDE_ACHAT"
   },
   DEMANDE_SERVICE: {
-    label: "Service Request",
+    label: "Unkonwn",
     value: "DEMANDE_SERVICE"
   }
 };

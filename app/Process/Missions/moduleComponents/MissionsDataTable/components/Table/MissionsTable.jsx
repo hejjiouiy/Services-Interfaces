@@ -2,9 +2,19 @@ import React from 'react';
 import TableHeader from './TableHeader';
 import TableBody from './TableBody';
 
-const MissionsTable = ({ missions, sortConfig, onSort, onView, onEdit, onDelete, onDownload }) => (
+const MissionsTable = ({ 
+  missions, 
+  sortConfig, 
+  onSort, 
+  onView, 
+  onEdit, 
+  onDelete, 
+  onDownload, 
+  onUpdateStatus, 
+  onUploadReport 
+}) => (
   <div className="overflow-x-auto">
-    <table className="min-w-full bg-white rounded-lg overflow-hidden">
+    <table className="min-w-full divide-y divide-gray-200">
       <TableHeader sortConfig={sortConfig} onSort={onSort} />
       <TableBody
         missions={missions}
@@ -12,8 +22,11 @@ const MissionsTable = ({ missions, sortConfig, onSort, onView, onEdit, onDelete,
         onEdit={onEdit}
         onDelete={onDelete}
         onDownload={onDownload}
+        onUpdateStatus={onUpdateStatus}
+        onUploadReport={onUploadReport}
       />
     </table>
   </div>
 );
+
 export default MissionsTable;

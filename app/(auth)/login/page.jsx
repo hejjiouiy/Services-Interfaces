@@ -1,7 +1,9 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+// Importez vos fonctions d'authentification
+import { handleEmailLogin, handleMicrosoftLogin, checkAuthentication } from '../../../utils/authHelpers';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -14,10 +16,24 @@ const Login = () => {
   // Animation des cercles décoratifs
   const [animateCircles, setAnimateCircles] = useState(false);
 
-  // Simuler l'animation au chargement
-  React.useEffect(() => {
+  // Vérifier si l'utilisateur est déjà connecté
+  useEffect(() => {
+    const checkExistingAuth = async () => {
+      try {
+        const authResult = await checkAuthentication();
+        if (authResult.authenticated) {
+          // Utilisateur déjà connecté, rediriger
+          router.push('/dashboard'); // ou votre page d'accueil
+          return;
+        }
+      } catch (error) {
+        console.log('No existing authentication');
+      }
+    };
+
+    checkExistingAuth();
     setAnimateCircles(true);
-  }, []);
+  }, [router]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -29,30 +45,58 @@ const Login = () => {
       return;
     }
 
-    // Simuler une requête d'authentification
+    // Validation email simple
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setError('Veuillez entrer une adresse email valide');
+      return;
+    }
+
     try {
       setIsLoading(true);
 
-      // Simulation d'une API call avec un délai
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      // Appel à votre API d'authentification
+      const result = await handleEmailLogin(email, password);
 
-      // Dans une application réelle, vous feriez un appel API ici
-      // const response = await fetch('/api/login', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify({ email, password, rememberMe })
-      // });
-      
-      // if (!response.ok) throw new Error('Identifiants incorrects');
-      // const data = await response.json();
-
-      // Redirection après connexion réussie
-      router.push('/');
+      if (result.success) {
+        console.log('✅ Connexion réussie pour:', result.user.username);
+        
+        // Redirection après connexion réussie
+        router.push('/'); // ou votre page d'accueil après connexion
+      } else {
+        setError(result.error);
+      }
     } catch (err) {
-      setError(err.message || 'Une erreur est survenue lors de la connexion');
+      console.error('❌ Erreur de connexion:', err);
+      setError('Une erreur inattendue est survenue. Veuillez réessayer.');
     } finally {
       setIsLoading(false);
     }
+  };
+
+  // Gestion de la connexion Microsoft
+  const handleMicrosoftClick = async () => {
+    try {
+      setError('');
+      setIsLoading(true);
+      
+      const result = await handleMicrosoftLogin();
+      
+      if (!result.success) {
+        setError(result.error);
+        setIsLoading(false);
+      }
+      // Si succès, la redirection vers Microsoft est automatique
+    } catch (error) {
+      console.error('❌ Erreur Microsoft:', error);
+      setError('Erreur lors de la connexion Microsoft');
+      setIsLoading(false);
+    }
+  };
+
+  // Gestion des boutons sociaux (Google et Facebook ne sont pas encore implémentés)
+  const handleSocialLogin = (provider) => {
+    setError(`La connexion ${provider} n'est pas encore disponible. Utilisez Microsoft ou vos identifiants.`);
   };
 
   return (
@@ -83,7 +127,16 @@ const Login = () => {
 
           {error && (
             <div className="mb-6 bg-red-50 border-l-4 border-red-500 p-4 rounded">
-              <p className="text-red-700">{error}</p>
+              <div className="flex">
+                <div className="flex-shrink-0">
+                  <svg className="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                  </svg>
+                </div>
+                <div className="ml-3">
+                  <p className="text-red-700 text-sm">{error}</p>
+                </div>
+              </div>
             </div>
           )}
 
@@ -97,9 +150,10 @@ const Login = () => {
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full py-3 px-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-main-green focus:border-main-green"
-                placeholder="exemple@shcc.ma"
+                className="w-full py-3 px-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-main-green focus:border-main-green transition-colors"
+                placeholder="exemple@um6p.ma"
                 required
+                disabled={isLoading}
               />
             </div>
 
@@ -117,10 +171,11 @@ const Login = () => {
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full py-3 px-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-main-green focus:border-main-green"
+                className="w-full py-3 px-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-main-green focus:border-main-green transition-colors"
                 placeholder="Votre mot de passe"
                 required
                 minLength={6}
+                disabled={isLoading}
               />
             </div>
 
@@ -132,6 +187,7 @@ const Login = () => {
                   className="h-4 w-4 text-main-green border-gray-300 rounded focus:ring-main-green"
                   checked={rememberMe}
                   onChange={(e) => setRememberMe(e.target.checked)}
+                  disabled={isLoading}
                 />
                 <label htmlFor="remember_me" className="ml-2 block text-sm text-gray-700">
                   Se souvenir de moi
@@ -142,15 +198,19 @@ const Login = () => {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full bg-main-green text-white py-3 px-4 rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-main-green transition-colors disabled:opacity-70 disabled:cursor-not-allowed flex justify-center"
+              className="w-full bg-main-green text-white py-3 px-4 rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-main-green transition-colors disabled:opacity-70 disabled:cursor-not-allowed flex justify-center items-center"
             >
               {isLoading ? (
-                <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                </svg>
-              ) : null}
-              {isLoading ? 'Connexion en cours...' : 'Se connecter'}
+                <>
+                  <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                  Connexion en cours...
+                </>
+              ) : (
+                'Se connecter'
+              )}
             </button>
           </form>
 
@@ -174,7 +234,11 @@ const Login = () => {
             </div>
 
             <div className="mt-6 flex justify-center items-center gap-4">
-              <button className="py-3 px-4 border border-gray-300 rounded-lg flex justify-center items-center hover:bg-gray-50 transition-colors">
+              <button 
+                onClick={() => handleSocialLogin('Google')}
+                disabled={isLoading}
+                className="py-3 px-4 border border-gray-300 rounded-lg flex justify-center items-center hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              >
                 <svg className="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M5.26644 9.76453C6.19903 6.93863 8.85469 4.90909 12.0002 4.90909C13.6912 4.90909 15.2184 5.50909 16.4184 6.49091L19.9093 3C17.7821 1.14545 15.0548 0 12.0002 0C7.27031 0 3.19799 2.6983 1.24023 6.65002L5.26644 9.76453Z" fill="#EA4335" />
                   <path d="M16.0406 18.0142C14.9508 18.718 13.5659 19.0909 11.9998 19.0909C8.86633 19.0909 6.21896 17.0773 5.27682 14.2618L1.2373 17.3334C3.19263 21.2953 7.26484 24.0001 11.9998 24.0001C14.9327 24.0001 17.7352 22.959 19.834 21.0012L16.0406 18.0142Z" fill="#34A853" />
@@ -183,21 +247,32 @@ const Login = () => {
                 </svg>
                 Google
               </button>
-              <button className="py-3 px-4 border border-gray-300 rounded-lg flex justify-center items-center hover:bg-gray-50 transition-colors">
+              
+              <button 
+                onClick={() => handleSocialLogin('Facebook')}
+                disabled={isLoading}
+                className="py-3 px-4 border border-gray-300 rounded-lg flex justify-center items-center hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              >
                 <svg className="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M22.5 12.1093C22.5 6.53437 18.1875 2 12.75 2C7.3125 2 3 6.53437 3 12.1093C3 17.1406 6.375 21.3594 10.9688 22V15.0781H8.53125V12.1093H10.9688V9.84375C10.9688 7.25 12.5625 5.71875 14.8906 5.71875C16.0312 5.71875 17.1719 5.95312 17.1719 5.95312V8.39063H15.9375C14.7031 8.39063 14.2344 9.17188 14.2344 9.9531V12.1093H17.0781L16.6094 15.0781H14.2344V22C18.8281 21.3594 22.5 17.1406 22.5 12.1093Z" fill="#1877F2" />
                 </svg>
                 Facebook
               </button>
-              <button className="py-3 px-4 border border-gray-300 rounded-lg flex justify-center items-center hover:bg-gray-50 transition-colors">
+              
+              <button 
+                onClick={handleMicrosoftClick}
+                disabled={isLoading}
+                className="py-3 px-4 border border-gray-300 rounded-lg flex justify-center items-center hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              >
                 <svg viewBox="0 0 32 32" className='h-6 w-6 mr-1' fill="none" xmlns="http://www.w3.org/2000/svg">
-                <g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
-                <g id="SVGRepo_iconCarrier"> 
-                  <rect x="17" y="17" width="10" height="10" fill="#FEBA08"></rect> 
-                  <rect x="5" y="17" width="10" height="10" fill="#05A6F0"></rect> 
-                  <rect x="17" y="5" width="10" height="10" fill="#80BC06"></rect> 
-                  <rect x="5" y="5" width="10" height="10" fill="#F25325"></rect> 
-                </g>
+                  <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
+                  <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
+                  <g id="SVGRepo_iconCarrier"> 
+                    <rect x="17" y="17" width="10" height="10" fill="#FEBA08"></rect> 
+                    <rect x="5" y="17" width="10" height="10" fill="#05A6F0"></rect> 
+                    <rect x="17" y="5" width="10" height="10" fill="#80BC06"></rect> 
+                    <rect x="5" y="5" width="10" height="10" fill="#F25325"></rect> 
+                  </g>
                 </svg>
                 Microsoft
               </button>

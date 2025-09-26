@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import SignaturePad from './signaturePad';
 
+
 const Register = () => {
   const [formData, setFormData] = useState({
     firstName: '',
@@ -11,6 +12,10 @@ const Register = () => {
     email: '',
     password: '',
     confirmPassword: '',
+    fonction: '',
+    unite: '',
+    telephone: '',
+    // digitalSignature: null,
     agreeTerms: false
   });
   const [isLoading, setIsLoading] = useState(false);
@@ -19,6 +24,10 @@ const Register = () => {
 
   // Animation for decorative circles
   const [animateCircles, setAnimateCircles] = useState(false);
+
+
+  const API_BASE_URL = process.env.NEXT_PUBLIC_API_GATEWAY_URL || 'http://localhost:8000';
+
 
   // Trigger animation on component mount
   React.useEffect(() => {
@@ -33,57 +42,71 @@ const Register = () => {
     });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError('');
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  setError('');
+  
+  // Validation
+  if (!formData.firstName || !formData.lastName || !formData.email || !formData.password) {
+    setError('Please fill in all required fields');
+    return;
+  }
+
+  if (formData.password !== formData.confirmPassword) {
+    setError('Passwords do not match');
+    return;
+  }
+
+  if (!formData.agreeTerms) {
+    setError('You must agree to the terms and conditions');
+    return;
+  }
+
+  if (formData.password.length < 8) {
+    setError('Password must be at least 8 characters long');
+    return;
+  }
+
+  try {
+    setIsLoading(true);
+
+    const response = await fetch(`${API_BASE_URL}/auth/register`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        email: formData.email,
+        password: formData.password,
+        fonction: formData.fonction,
+        unite: formData.unite,
+        telephone: formData.telephone,
+        // digitalSignature: formData.digitalSignature,
+      })
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.detail || 'Registration failed');
+    }
+
+    // Show success message (you can use a toast library or state)
+    alert('Account created successfully! Redirecting to login...');
     
-    // Basic validation
-    if (!formData.firstName || !formData.lastName || !formData.email || !formData.password) {
-      setError('Please fill in all required fields');
-      return;
-    }
-
-    if (formData.password !== formData.confirmPassword) {
-      setError('Passwords do not match');
-      return;
-    }
-
-    if (!formData.agreeTerms) {
-      setError('You must agree to the terms and conditions');
-      return;
-    }
-
-    // Password strength validation (basic example)
-    if (formData.password.length < 8) {
-      setError('Password must be at least 8 characters long');
-      return;
-    }
-
-    // Simulate registration request
-    try {
-      setIsLoading(true);
-
-      // Simulate API call with delay
-      await new Promise(resolve => setTimeout(resolve, 1500));
-
-      // In a real application, you would call your API here
-      // const response = await fetch('/api/register', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify(formData)
-      // });
-      
-      // if (!response.ok) throw new Error('Registration failed');
-      // const data = await response.json();
-
-      // Redirect after successful registration
-      router.push('/login?registered=true');
-    } catch (err) {
-      setError(err.message || 'An error occurred during registration');
-    } finally {
-      setIsLoading(false);
-    }
-  };
+    // Redirect to login
+    setTimeout(() => {
+      router.push('/login');
+    }, 1500);
+    
+  } catch (err) {
+    setError(err.message || 'Registration failed. Please try again.');
+  } finally {
+    setIsLoading(false);
+  }
+};
 
   return (
     <div className="min-h-screen flex flex-col md:flex-row">
@@ -150,6 +173,38 @@ const Register = () => {
                 />
               </div>
             </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+              <div>
+                <label htmlFor="Fonction" className="block text-sm font-medium text-gray-700 mb-2">
+                  Fonction *
+                </label>
+                <input
+                  id="fonction"
+                  name="fonction"
+                  type="text"
+                  value={formData.fonction}
+                  onChange={handleChange}
+                  className="w-full py-3 px-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-main-green focus:border-main-green"
+                  placeholder="Phd Student, Professor, Doctor"
+                  required
+                />
+              </div>
+              <div>
+                <label htmlFor="Unite" className="block text-sm font-medium text-gray-700 mb-2">
+                  Unite *
+                </label>
+                <input
+                  id="unite"
+                  name="unite"
+                  type="text"
+                  value={formData.unite}
+                  onChange={handleChange}
+                  className="w-full py-3 px-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-main-green focus:border-main-green"
+                  placeholder="Um6p-Hosital, Fms"
+                  required
+                />
+              </div>
+            </div>
 
             <div className="mb-6">
               <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
@@ -163,6 +218,21 @@ const Register = () => {
                 onChange={handleChange}
                 className="w-full py-3 px-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-main-green focus:border-main-green"
                 placeholder="example@shcc.ma"
+                required
+              />
+            </div>
+            <div className="mb-6">
+              <label htmlFor="telephone" className="block text-sm font-medium text-gray-700 mb-2">
+                Telephone *
+              </label>
+              <input
+                id="telephone"
+                name="telephone"
+                type="text"
+                value={formData.telephone}
+                onChange={handleChange}
+                className="w-full py-3 px-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-main-green focus:border-main-green"
+                placeholder="+212 6 12 34 56 78"
                 required
               />
             </div>
@@ -202,12 +272,12 @@ const Register = () => {
                 required
               />
             </div>
-            <div className="mb-6">
+            {/* <div className="mb-6">
               <label htmlFor="digitalSignature" className="block text-sm font-medium text-gray-700 mb-2">
                 Digital Signature *
               </label>
               <SignaturePad />
-            </div>
+            </div> */}
 
             <div className="flex items-start mb-8">
               <div className="flex items-center h-5">

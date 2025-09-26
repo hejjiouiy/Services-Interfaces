@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
+import { handleLogout } from '../../../../utils/authHelpers';
 
 const useSidebarLogic = (mainLinks) => {
   const pathname = usePathname();
@@ -54,9 +55,17 @@ const useSidebarLogic = (mainLinks) => {
     }
   }, [isMobile]);
 
-  const handleLogout = useCallback(() => {
-    router.push('/login');
-    closeSidebar();
+  const handleLogoutClick = useCallback(async () => {
+    try {
+      await handleLogout();
+      closeSidebar();
+      // La redirection vers /login est déjà gérée dans handleLogout()
+    } catch (error) {
+      console.error('Erreur lors de la déconnexion:', error);
+      // En cas d'erreur, forcer la redirection quand même
+      router.push('/login');
+      closeSidebar();
+    }
   }, [router, closeSidebar]);
 
   return {
@@ -67,8 +76,9 @@ const useSidebarLogic = (mainLinks) => {
     toggleMenu,
     toggleSidebar,
     closeSidebar,
-    handleLogout,
+    handleLogout: handleLogoutClick,
     isMenuActive
   };
 };
+
 export default useSidebarLogic;

@@ -40,16 +40,16 @@ const Services = () => {
                 component: <MissionsDataTable />,
                 description: "Request help with visa applications and processing"
             },
-            {
-                name: "Reports",
-                component: <MissionsCardView />,
-                description: "Submit travel expenses for reimbursement"
-            },
-            {
-                name: "BI Dashboard",
-                component: <PowerBIAnalysisPage />,
-                description: "Submit travel expenses for reimbursement"
-            },
+            // {
+            //     name: "Reports",
+            //     component: <MissionsCardView />,
+            //     description: "Submit travel expenses for reimbursement"
+            // },
+            // {
+            //     name: "BI Dashboard",
+            //     component: <PowerBIAnalysisPage />,
+            //     description: "Submit travel expenses for reimbursement"
+            // },
             {
                 name: "Analysis",
                 component: <MissionsAnalysisPage />,

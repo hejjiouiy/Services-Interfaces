@@ -39,16 +39,7 @@ const RequestDetailsSection = ({ formData, onChange, errors }) => {
           error={errors.dateBesoin}
         />
         
-        <SelectField
-          name="ligne_budgetaire_id"
-          label="Budget Line"
-          value={formData.ligne_budgetaire_id}
-          onChange={onChange}
-          options={budgetLines.map(line => ({ value: line.id, label: line.label }))}
-          placeholder="Select Budget Line"
-          required={true}
-          error={errors.ligne_budgetaire_id}
-        />
+          
       </div>
     </div>
   );
