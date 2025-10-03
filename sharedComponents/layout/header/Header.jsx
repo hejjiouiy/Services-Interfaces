@@ -82,7 +82,7 @@ const Header = ({ isMobile = false, sidebarOpen = false, setSidebarOpen = () => 
           </div>
           
           {/* User Menu */}
-          <div ref={userMenuRef}>
+          {/* <div ref={userMenuRef}>
             <div 
               className="cursor-pointer flex items-center p-1 lg:p-2"
               onClick={() => setShowUserMenu(!showUserMenu)}
@@ -98,7 +98,7 @@ const Header = ({ isMobile = false, sidebarOpen = false, setSidebarOpen = () => 
                 onLogout={handleLogout}
               />
             )}
-          </div>
+          </div> */}
         </div>
       </div>
       

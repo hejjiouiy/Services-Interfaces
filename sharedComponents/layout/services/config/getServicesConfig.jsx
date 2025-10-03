@@ -47,70 +47,70 @@ export const getServicesConfig = () => ({
       description: "Request and track mission approvals"
     }
   ],
-  "Access": [
-    { 
-      name: "Access Demand", 
-      component: <Form formType="access" />,
-      description: "Submit a new access request for yourself or guests"
-    },
-    { 
-      name: "Pending Demands", 
-      component: <Card status="pending" type="access" />,
-      description: "View and track your pending access requests"
-    },
-    { 
-      name: "Visitor Passes", 
-      component: <Form formType="visitor" />,
-      description: "Request temporary passes for visitors and guests"
-    },
-    { 
-      name: "Conference Room Booking", 
-      component: <Form formType="conference" />,
-      description: "Book meeting spaces and conference rooms"
-    }
-  ],
-  "Housing": [
-    {
-      name: "Submit Request",
-      component: <HousingRequestForm />,
-      description: "Submit a new accommodation request for yourself or guests"
-    },
-    {
-      name: "My Requests",
-      component: <HousingRequestList />,
-      description: "View and track your accommodation requests"
-    },
-    {
-      name: "Validation",
-      component: <HousingValidationPanel />,
-      description: "Review, validate or reject submitted requests"
-    },
-    {
-      name: "Assignment & Budget",
-      component: <HousingAssignmentPanel />,
-      description: "Assign accommodation and link a budget line"
-    },
-    {
-      name: "Guest Management",
-      component: <HousingGuestManager />,
-      description: "Manage guests and their reservation requests"
-    }
-  ],
-  "Catering": [
-    { 
-      name: "Catering Request", 
-      component: <CateringRequestForm />,
-      description: "Order catering services for events and meetings"
-    },
-    { 
-      name: "My Requests", 
-      component: <CateringRequestList />,
-      description: "View and modify your daily meal plan"
-    },
-    { 
-      name: "Requests Management - edit", 
-      component: <CateringRequestManager />,
-      description: "View cafeteria hours, menus, and information"
-    }
-  ],
+  // "Access": [
+  //   { 
+  //     name: "Access Demand", 
+  //     component: <Form formType="access" />,
+  //     description: "Submit a new access request for yourself or guests"
+  //   },
+  //   { 
+  //     name: "Pending Demands", 
+  //     component: <Card status="pending" type="access" />,
+  //     description: "View and track your pending access requests"
+  //   },
+  //   { 
+  //     name: "Visitor Passes", 
+  //     component: <Form formType="visitor" />,
+  //     description: "Request temporary passes for visitors and guests"
+  //   },
+  //   { 
+  //     name: "Conference Room Booking", 
+  //     component: <Form formType="conference" />,
+  //     description: "Book meeting spaces and conference rooms"
+  //   }
+  // ],
+  // "Housing": [
+  //   {
+  //     name: "Submit Request",
+  //     component: <HousingRequestForm />,
+  //     description: "Submit a new accommodation request for yourself or guests"
+  //   },
+  //   {
+  //     name: "My Requests",
+  //     component: <HousingRequestList />,
+  //     description: "View and track your accommodation requests"
+  //   },
+  //   {
+  //     name: "Validation",
+  //     component: <HousingValidationPanel />,
+  //     description: "Review, validate or reject submitted requests"
+  //   },
+  //   {
+  //     name: "Assignment & Budget",
+  //     component: <HousingAssignmentPanel />,
+  //     description: "Assign accommodation and link a budget line"
+  //   },
+  //   {
+  //     name: "Guest Management",
+  //     component: <HousingGuestManager />,
+  //     description: "Manage guests and their reservation requests"
+  //   }
+  // ],
+  // "Catering": [
+  //   { 
+  //     name: "Catering Request", 
+  //     component: <CateringRequestForm />,
+  //     description: "Order catering services for events and meetings"
+  //   },
+  //   { 
+  //     name: "My Requests", 
+  //     component: <CateringRequestList />,
+  //     description: "View and modify your daily meal plan"
+  //   },
+  //   { 
+  //     name: "Requests Management - edit", 
+  //     component: <CateringRequestManager />,
+  //     description: "View cafeteria hours, menus, and information"
+  //   }
+  // ],
 });

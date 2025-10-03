@@ -153,6 +153,12 @@ const ActionButtons = ({ mission, onView, onEdit, onDelete, onDownload, onUpdate
       console.error("Failed to update mission status:", error);
       throw error;
     }
+    finally{
+      
+      setTimeout(() => {
+      window.location.reload();
+    }, 4000);
+    }
   };
 
   const handleStatusChangeRequest = (newStatus) => {
