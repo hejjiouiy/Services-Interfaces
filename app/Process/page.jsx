@@ -3,7 +3,7 @@ import Services from '../../sharedComponents/layout/services/Services';
 import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useUser } from '../../sharedComponents/hooks/useUser';
+import { useUser } from '../../sharedComponents/hooks/useAuth';
 
 const tabs = [
   { label: "Access", href: "/Services/access" },

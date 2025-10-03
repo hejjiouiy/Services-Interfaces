@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { useUser } from '@/sharedComponents/hooks/useUser';
+import { useUser } from '@/sharedComponents/hooks/useAuth';
 import Button from '@/sharedComponents/components/button';
 
 const VisitorPasses = () => {

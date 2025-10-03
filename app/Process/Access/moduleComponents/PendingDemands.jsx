@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { useUser } from '@/sharedComponents/hooks/useUser';
+import { useUser } from '@/sharedComponents/hooks/useAuth';
 import Card from '@/sharedComponents/components/card';
 import Button from '@/sharedComponents/components/button';
 

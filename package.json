@@ -13,6 +13,7 @@
     "@react-three/drei": "^10.0.8",
     "@react-three/fiber": "^9.1.2",
     "@react-three/postprocessing": "^3.0.4",
+    "axios": "^1.12.2",
     "chart.js": "^4.4.9",
     "date-fns": "^4.1.0",
     "lucide-react": "^0.510.0",
