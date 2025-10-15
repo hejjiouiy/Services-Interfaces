@@ -94,10 +94,7 @@ const {
   if (!mission) return null;
 
   return {
-    // Garder l'ID de l'ordre de mission
     id: mission.id,
-    
-    // Données de la mission (depuis mission.mission)
     type: mission.mission?.type || 'N/A',
     destination: mission.mission?.destination || 'N/A',
     details: mission.mission?.details || '',
@@ -107,23 +104,15 @@ const {
     titre: mission.mission?.titre || '',
     createdAt: mission.mission?.createdAt || '',
     updatedAt: mission.mission?.updatedAt || '',
-    
-    // Données de l'ordre de mission
     dateDebut: mission.Debut,
     dateFin: mission.Fin,
     etat: mission["etat demande"] || 'Ouverte',
     user_id: mission.User,
     mission_id: mission.mission?.id,
-    
-    // ADD THIS LINE: Include the user object
     user: mission.user,
-    
-    // Données additionnelles de la nouvelle structure
     financement: mission.financement,
     rapport: mission.rapport || [],
     accordResponsable: mission["accord de Responsable"],
-    
-    // Pour compatibilité avec l'ancienne structure
     ordres_mission: [{
       id: mission.id,
       dateDebut: mission.Debut,
@@ -132,7 +121,10 @@ const {
       user_id: mission.User,
       mission_id: mission.mission?.id,
       createdAt: mission.mission?.createdAt || '',
-      updatedAt: mission.mission?.updatedAt || ''
+      updatedAt: mission.mission?.updatedAt || '',
+      // Add these lines:
+      hebergements: mission.hebergements || [],
+      voyages: mission.voyages || []
     }]
   };
 };

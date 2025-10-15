@@ -1,7 +1,8 @@
 import React from 'react';
 import { formatDate, formatAmount } from '../../utils/formatters';
-import  getTypeIcons from '../../config/typeIcons';
-import  getStatusColors  from '../../config/statusColors';
+import getTypeIcons from '../../config/typeIcons';
+import getStatusColors from '../../config/statusColors';
+import FinancingDetailsSection from './FinancingDetailsSection'; // Add this import
 
 const MissionDetailsDisplay = ({ mission }) => {
   const typeIcons = getTypeIcons();
@@ -89,6 +90,12 @@ const MissionDetailsDisplay = ({ mission }) => {
       <div className="mb-6">
         <p className="text-sm text-gray-500 mb-1">Détails de la mission</p>
         <p className="bg-gray-50 p-4 rounded-lg">{mission.details}</p>
+      </div>
+
+      {/* ADD THE FINANCING SECTION HERE */}
+      <div className="mb-6">
+        <h3 className="text-xl font-semibold text-gray-800 mb-4">Informations financières</h3>
+        <FinancingDetailsSection mission={mission} />
       </div>
 
       {/* User Roles (optional, for admin view) */}
